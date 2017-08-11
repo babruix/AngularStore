@@ -5,13 +5,15 @@ import {ICard} from '../models/ICard';
   selector: 'app-card',
   template: `
     <div class="card">
-      <div class="card-block">
-        <p class="card-text">{{ card.text }}</p>
+      <div class="card-header">
         <label class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" [checked]="card.pinned"
                  (change)="card.pinned = !card.pinned"/>
           <span class="custom-control-indicator"></span>
         </label>
+      </div>
+      <div class="card-block">
+        <p class="card-text">{{ card.text }}</p>
       </div>
     </div>
   `,
