@@ -15,6 +15,9 @@ import {ICard} from '../models/ICard';
       <div class="card-block">
         <p class="card-text">{{ card.text }}</p>
       </div>
+      <div class="card-footer text-muted">
+        ...
+      </div>
     </div>
   `,
   styles: [
