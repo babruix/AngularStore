@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {ICard} from './models/ICard';
 
 @Component({
   selector: 'app-root',
@@ -9,19 +10,19 @@ import { Component } from '@angular/core';
     </nav>
     <app-card-list [cards]="cards"></app-card-list>
   `,
-    styles: [],
+  styles: [],
 })
 export class AppComponent {
-  public cards: Array<any> = [
-        {text: 'Card 1'},
-        {text: 'Card 2'},
-        {text: 'Card 3'},
-        {text: 'Card 4'},
-        {text: 'Card 5'},
-        {text: 'Card 6'},
-        {text: 'Card 7'},
-        {text: 'Card 8'},
-        {text: 'Card 9'},
-        {text: 'Card 10'},
-      ];
+  public cards: Array<ICard> = [
+    {text: 'Card 1', pinned: false},
+    {text: 'Card 2', pinned: false},
+    {text: 'Card 3', pinned: false},
+    {text: 'Card 4', pinned: false},
+    {text: 'Card 5', pinned: false},
+    {text: 'Card 6', pinned: false},
+    {text: 'Card 7', pinned: false},
+    {text: 'Card 8', pinned: false},
+    {text: 'Card 9', pinned: false},
+    {text: 'Card 10', pinned: false},
+  ];
 }
