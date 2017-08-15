@@ -5,7 +5,7 @@ import {ICard} from '../models/ICard';
   selector: 'app-card',
   template: `
     <div class="card">
-      <div class="card-header">
+      <div class="card-header text-right">
         <label class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" [checked]="card.pinned"
                  (change)="card.pinned = !card.pinned"/>
