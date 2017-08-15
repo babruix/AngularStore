@@ -33,6 +33,5 @@ export class AppComponent {
 
   addCard(cardText) {
     this.cards.push({text: cardText, pinned: false});
-    console.log(this.cards);
   }
 }
