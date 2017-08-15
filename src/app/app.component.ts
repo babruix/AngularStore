@@ -31,7 +31,8 @@ export class AppComponent {
     {text: 'Card 10', pinned: false},
   ];
 
-  addCard($event: Event) {
-    console.log($event);
+  addCard(cardText) {
+    this.cards.push({text: cardText, pinned: false});
+    console.log(this.cards);
   }
 }
