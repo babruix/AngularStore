@@ -8,6 +8,11 @@ import {ICard} from './models/ICard';
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
       <a class="navbar-brand" href="#">Keep Clone</a>
     </nav>
+    <div class="container-fluid text-center pb-5">
+      <div class="row justify-content-end">
+        <app-new-card-input (onCardAdd)="addCard($event)"></app-new-card-input>
+      </div>
+    </div>
     <app-card-list [cards]="cards"></app-card-list>
   `,
   styles: [],
@@ -25,4 +30,8 @@ export class AppComponent {
     {text: 'Card 9', pinned: false},
     {text: 'Card 10', pinned: false},
   ];
+
+  addCard($event: Event) {
+    console.log($event);
+  }
 }
