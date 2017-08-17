@@ -6,7 +6,7 @@ import {ICard} from './models/ICard';
   template: `
     <!-- Fixed navbar -->
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-      <a class="navbar-brand" href="#">Keep Clone</a>
+      <a class="navbar-brand" href="#">CPINNER: Cards Pinner</a>
     </nav>
     <div class="container-fluid text-center pb-5">
       <div class="row justify-content-end">

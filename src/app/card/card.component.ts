@@ -20,9 +20,16 @@ import {ICard} from '../models/ICard';
       </div>
     </div>
   `,
-  styles: [
-    '.card {margin-top: 1.5rem;}'
-  ],
+  styles: [`
+    .card {
+      margin-bottom: 1rem;
+      position: relative;
+      min-height: 200px;
+      box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.4);
+      padding: 1rem;
+      background-color: #fe0;
+    }
+  `],
 })
 export class CardComponent implements OnInit {
   @Input() card: ICard;
