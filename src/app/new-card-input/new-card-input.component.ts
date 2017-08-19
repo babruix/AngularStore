@@ -1,6 +1,9 @@
-import {Component, EventEmitter, HostBinding, HostListener, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {dummyValidator} from '../shared/dummy.validator';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../reducers';
+import * as data from '../actions/add-card-action';
 
 @Component({
   selector: 'app-new-card-input',
@@ -17,7 +20,6 @@ import {dummyValidator} from '../shared/dummy.validator';
 })
 export class NewCardInputComponent implements OnInit, OnDestroy {
   @HostBinding('class') class = 'col-8';
-  @Output() onCardAdd = new EventEmitter<string>();
 
   @ViewChild('form') public form: NgForm;
 
@@ -31,7 +33,7 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(fb: FormBuilder) {
+  constructor(private store: Store<fromRoot.State>, fb: FormBuilder) {
     this.newCardForm = fb.group({
       'text': [null, Validators.compose([
           Validators.required, Validators.minLength(2), dummyValidator
@@ -48,7 +50,7 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
   }
 
   addCard(text) {
-    this.onCardAdd.emit(text);
-    this.newCardForm.controls['text'].setValue('');
+    this.store.dispatch(new data.AddCardAction({text: text, pinned: false}));
+    this.newCardForm.reset();
   }
 }
