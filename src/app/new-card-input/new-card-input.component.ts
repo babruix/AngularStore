@@ -1,9 +1,8 @@
 import {Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
-import {dummyValidator} from '../shared/dummy.validator';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
-import * as data from '../actions/add-card-action';
+import * as data from '../actions/card-actions';
 
 @Component({
   selector: 'app-new-card-input',
@@ -36,7 +35,7 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromRoot.State>, fb: FormBuilder) {
     this.newCardForm = fb.group({
       'text': [null, Validators.compose([
-          Validators.required, Validators.minLength(2), dummyValidator
+          Validators.required, Validators.minLength(2)
         ]
       )],
     });

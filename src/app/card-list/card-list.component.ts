@@ -5,6 +5,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
 import 'rxjs/add/operator/takeWhile';
+import * as cardActions from '../actions/card-actions';
 
 @Component({
   selector: 'app-card-list',
@@ -12,7 +13,7 @@ import 'rxjs/add/operator/takeWhile';
     <div class="container-fluid text-center pb-5" *ngIf="anyPinned$ | async">
       <div class="row"><p class="h6 col-2">Pinned</p></div>
       <div class="row">
-        <app-card *ngFor="let card of getPinned() | async" [card]="card"></app-card>
+        <app-card *ngFor="let card of getPinned() | async" [card]="card" (onRemove)="removeCard($event)"></app-card>
       </div>
     </div>
     <div class="container-fluid text-center pb-5">
@@ -20,7 +21,7 @@ import 'rxjs/add/operator/takeWhile';
         <p class="h6 col-2" *ngIf="anyPinned$ | async">Others</p>
       </div>
       <div class="row">
-        <app-card *ngFor="let card of getPinned(false) | async" [card]="card"></app-card>
+        <app-card *ngFor="let card of getPinned(false) | async" [card]="card" (onRemove)="removeCard($event)"></app-card>
       </div>
     </div>
   `,
@@ -56,5 +57,9 @@ export class CardListComponent implements OnInit, OnDestroy {
       .map((cardArr) => cardArr.filter(card => pinned
         ? card.pinned === true
         : card.pinned !== true));
+  }
+
+  removeCard(card) {
+    this.store.dispatch(new cardActions.RemoveAction(card));
   }
 }
