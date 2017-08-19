@@ -8,14 +8,19 @@ import { combineReducers } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 
 import * as dataModel from '../models/ICardsList';
-import * as fromData from './cards-reducer';
+import * as uiModel from '../models/IUi';
+
+import * as fromCards from './cards';
+import * as fromUi from './ui';
 
 export interface State {
   data: dataModel.CardsList;
+  ui: uiModel.Ui;
 }
 
 const reducers = {
-  data: fromData.reducer,
+  data: fromCards.reducer,
+  ui: fromUi.reducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeLogger(), storeFreeze, combineReducers)(reducers);
@@ -33,4 +38,10 @@ export function reducer(state: any, action: any) {
 
 export const getDataState = (state: State) => state.data;
 
-export const getCards = createSelector(getDataState, fromData.getCards);
+export const getCards = createSelector(getDataState, fromCards.getCards);
+
+/* Data */
+
+export const getUiState = (state: State) => state.ui;
+
+export const getToolbarColor = createSelector(getUiState, fromUi.getToolbarColor);

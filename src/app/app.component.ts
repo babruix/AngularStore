@@ -1,12 +1,16 @@
 import {Component} from '@angular/core';
-import {ICard} from './models/ICard';
+import {Observable} from 'rxjs/Observable';
+import {Store} from '@ngrx/store';
+import * as fromRoot from './reducers';
 
 @Component({
   selector: 'app-root',
   template: `
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top"
+         [ngClass]="{'bg-inverse': !(toolbarColor$ | async)}" [ngStyle]="{'background-color': toolbarColor$ |async}">
       <a class="navbar-brand" href="#">CPinner: Cards Pinner</a>
+      <app-color-input></app-color-input>
     </nav>
     <div class="container-fluid text-center pb-5">
       <div class="row justify-content-end">
@@ -18,4 +22,9 @@ import {ICard} from './models/ICard';
   styles: [],
 })
 export class AppComponent {
+  public toolbarColor$: Observable<string>;
+
+  constructor(private store: Store<fromRoot.State>) {
+    this.toolbarColor$ = this.store.select(fromRoot.getToolbarColor);
+  }
 }
