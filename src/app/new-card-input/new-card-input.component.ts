@@ -49,7 +49,7 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
   }
 
   addCard(text) {
-    this.store.dispatch(new data.AddCardAction({text: text, pinned: false}));
+    this.store.dispatch(new data.AddCardAction(text));
     this.newCardForm.reset();
   }
 }

@@ -10,7 +10,7 @@ export const ActionTypes = {
 export class AddCardAction implements Action {
   type = ActionTypes.ADD;
 
-  constructor(public payload: ICard) {
+  constructor(public payload: string) {
   }
 }
 
