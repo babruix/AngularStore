@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ICard} from '../models/ICard';
 import 'rxjs/add/operator/map';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
@@ -13,22 +12,27 @@ import * as cardActions from '../actions/card';
     <div class="container-fluid text-center pb-5" *ngIf="anyPinned$ | async">
       <div class="row"><p class="h6 col-2">Pinned</p></div>
       <div class="row">
-        <app-card *ngFor="let card of getPinned() | async" [card]="card" (onRemove)="removeCard($event)"></app-card>
+        <app-card *ngFor="let card of getPinned() | async"
+                  [card]="card"
+                  (onRemove)="removeCard($event)"
+                  (onPinnedToggle)="togglePinned($event)"></app-card>
       </div>
     </div>
-    <div class="container-fluid text-center pb-5">
+    <div class=" container-fluid text-center pb-5">
       <div class="row">
         <p class="h6 col-2" *ngIf="anyPinned$ | async">Others</p>
       </div>
       <div class="row">
-        <app-card *ngFor="let card of getPinned(false) | async" [card]="card" (onRemove)="removeCard($event)"></app-card>
+        <app-card *ngFor="let card of getPinned(false) | async"
+                  [card]="card"
+                  (onRemove)="removeCard($event)"
+                  (onPinnedToggle)="togglePinned($event)"></app-card>
       </div>
     </div>
   `,
   styles: []
 })
 export class CardListComponent implements OnInit, OnDestroy {
-  public cards: Array<ICard> = [];
   public anyPinned$: Observable<boolean>;
   private alive = true;
 
@@ -40,13 +44,12 @@ export class CardListComponent implements OnInit, OnDestroy {
     this.store
       .select(fromRoot.getCards)
       .takeWhile(() => this.alive)
-      .subscribe(state => {
-        this.cards = state
-      });
+      .map(cards => cards.length > 0);
   }
 
   ngOnInit() {
   }
+
   ngOnDestroy(): void {
     this.alive = false;
   }
@@ -61,5 +64,9 @@ export class CardListComponent implements OnInit, OnDestroy {
 
   removeCard(card) {
     this.store.dispatch(new cardActions.RemoveAction(card));
+  }
+
+  togglePinned(card) {
+    this.store.dispatch(new cardActions.TogglePinnedAction(card));
   }
 }

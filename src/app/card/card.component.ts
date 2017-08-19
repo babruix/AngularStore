@@ -16,7 +16,7 @@ import {ICard} from '../models/ICard';
       <div class="card-footer text-muted">
         <label class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" [checked]="card.pinned"
-                 (change)="card.pinned = !card.pinned"/>
+                 (change)="updatePinned()"/>
           <span class="custom-control-indicator"></span>
         </label>
       </div>
@@ -36,6 +36,7 @@ import {ICard} from '../models/ICard';
 export class CardComponent implements OnInit {
   @Input() card: ICard;
   @Output() 'onRemove' = new EventEmitter<ICard>();
+  @Output() 'onPinnedToggle' = new EventEmitter<ICard>();
   @HostBinding('class') classes = 'col-2';
 
   constructor() {
@@ -48,4 +49,7 @@ export class CardComponent implements OnInit {
     this.onRemove.emit(this.card);
   }
 
+  updatePinned() {
+    this.onPinnedToggle.emit(this.card);
+  }
 }

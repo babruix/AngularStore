@@ -5,14 +5,22 @@ import {merge, without, clone, trim} from 'lodash';
 
 
 export function reducer(state = cardsListModel.defaults, action: Action): cardsListModel.CardsList {
+  const stateCopy = clone(state);
+
   switch (action.type) {
     case cardActions.ActionTypes.ADD:
       return merge({}, state, {cards: [...state.cards, {text: trim(action.payload)}]});
 
     case cardActions.ActionTypes.REMOVE:
-      const stateCopy = clone(state);
       stateCopy.cards = [];
       return merge({}, stateCopy.cards, {cards: without(state.cards, action.payload)});
+
+    case cardActions.ActionTypes.TOGGLE_PINNED:
+      const card = clone(action.payload);
+      stateCopy.cards = without(state.cards, action.payload);
+      card.pinned = !card.pinned;
+      stateCopy.cards.push(card);
+      return merge({}, stateCopy);
 
     default:
       return state;

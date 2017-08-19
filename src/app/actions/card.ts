@@ -4,7 +4,8 @@ import {ICard} from '../models/ICard';
 
 export const ActionTypes = {
   ADD: type('[CardsList] Add Card'),
-  REMOVE: type('[CardsList] Remove Card')
+  REMOVE: type('[CardsList] Remove Card'),
+  TOGGLE_PINNED: type('[CardsList] Toggle Pinned'),
 };
 
 export class AddCardAction implements Action {
@@ -21,4 +22,11 @@ export class RemoveAction implements Action {
   }
 }
 
-export type Actions = AddCardAction | RemoveAction;
+export class TogglePinnedAction implements Action {
+  type = ActionTypes.TOGGLE_PINNED;
+
+  constructor(public payload: ICard) {
+  }
+}
+
+export type Actions = AddCardAction | RemoveAction | TogglePinnedAction;
