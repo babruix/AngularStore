@@ -1,29 +1,35 @@
-import { createSelector } from 'reselect';
-import { ActionReducer } from '@ngrx/store';
-import { compose } from '@ngrx/core/compose';
-import { storeLogger } from 'ngrx-store-logger';
-import { storeFreeze } from 'ngrx-store-freeze';
-import { combineReducers } from '@ngrx/store';
+import {createSelector} from 'reselect';
+import {ActionReducer} from '@ngrx/store';
+import {compose} from '@ngrx/core/compose';
+import {storeLogger} from 'ngrx-store-logger';
+import {storeFreeze} from 'ngrx-store-freeze';
+import {combineReducers} from '@ngrx/store';
 
-import { environment } from '../../environments/environment';
+import {environment} from '../../environments/environment';
 
-import * as dataModel from '../models/ICardsList';
+import * as cardsListModel from '../models/ICardsList';
 import * as uiModel from '../models/IUi';
 
 import * as fromCards from './cards';
 import * as fromUi from './ui';
+import {localStorageSync} from 'ngrx-store-localstorage';
 
 export interface State {
-  data: dataModel.CardsList;
+  CardsList: cardsListModel.CardsList;
   ui: uiModel.Ui;
 }
 
 const reducers = {
-  data: fromCards.reducer,
+  CardsList: fromCards.reducer,
   ui: fromUi.reducer,
 };
 
-const developmentReducer: ActionReducer<State> = compose(storeLogger(), storeFreeze, combineReducers)(reducers);
+const storageSync = localStorageSync({
+  keys: ['ui', 'CardsList'],
+  rehydrate: true
+});
+
+const developmentReducer: ActionReducer<State> = compose(storeLogger(), storageSync, storeFreeze, combineReducers)(reducers);
 const productionReducer: ActionReducer<State> = compose(combineReducers)(reducers);
 
 export function reducer(state: any, action: any) {
@@ -36,11 +42,11 @@ export function reducer(state: any, action: any) {
 
 /* CardsList */
 
-export const getDataState = (state: State) => state.data;
+export const getDataState = (state: State) => state.CardsList;
 
 export const getCards = createSelector(getDataState, fromCards.getCards);
 
-/* Data */
+/* UI */
 
 export const getUiState = (state: State) => state.ui;
 

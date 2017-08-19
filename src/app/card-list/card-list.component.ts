@@ -5,7 +5,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
 import 'rxjs/add/operator/takeWhile';
-import * as cardActions from '../actions/card-actions';
+import * as cardActions from '../actions/card';
 
 @Component({
   selector: 'app-card-list',

@@ -2,7 +2,7 @@ import {Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild} from
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
-import * as data from '../actions/card-actions';
+import * as cardActions from '../actions/card';
 
 @Component({
   selector: 'app-new-card-input',
@@ -49,7 +49,7 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
   }
 
   addCard(text) {
-    this.store.dispatch(new data.AddCardAction(text));
+    this.store.dispatch(new cardActions.AddCardAction(text));
     this.newCardForm.reset();
   }
 }
