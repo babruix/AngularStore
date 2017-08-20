@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StoreModule} from '@ngrx/store';
 import {reducer} from './reducers/index';
 import { ColorInputComponent } from './color-input/color-input.component';
+import {ColorPickerModule} from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ColorInputComponent } from './color-input/color-input.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.provideStore(reducer)
+    StoreModule.provideStore(reducer),
+    ColorPickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
