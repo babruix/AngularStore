@@ -1,8 +1,8 @@
-import {Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
-import {Store} from '@ngrx/store';
-import {Subject} from 'rxjs/Subject';
-import {debounceTime} from 'rxjs/operator/debounceTime';
+import { Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
+import { debounceTime } from 'rxjs/operator/debounceTime';
 import * as fromRoot from '../reducers';
 import * as cardActions from '../actions/card';
 
@@ -15,7 +15,7 @@ import * as cardActions from '../actions/card';
           <app-color-input></app-color-input>
         </div>
         <div class="card-block">
-          <input placeholder="Take a note..." class="form-control" name="text" 
+          <input placeholder="Take a note..." class="form-control" name="text"
                  [formControl]="newCardForm.controls['text']"
                  ngbTooltip="Fill in text for your new card and press Enter">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -25,14 +25,16 @@ import * as cardActions from '../actions/card';
     </div>
   `,
   styles: [
-    `
-      .card { 
-        margin-bottom: 1rem; 
+      `
+      .card {
+        margin-bottom: 1rem;
         margin-top: -4em;
       }
+
       .card-block input {
         padding-left: 28px;
       }
+
       .card-block i {
         float: left;
         padding: 0 7px;

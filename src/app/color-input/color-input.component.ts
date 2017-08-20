@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import { Store} from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import * as ui from '../actions/ui';
 
@@ -20,6 +20,7 @@ import * as ui from '../actions/ui';
       padding-left: 28px;
       cursor: pointer;
     }
+
     .fa-eyedropper {
       float: left;
       padding: 0 7px;
@@ -31,7 +32,7 @@ export class ColorInputComponent implements OnInit {
   public color: string;
 
   changeColor(color: string) {
-      this.store.dispatch(new ui.SetToolbarColorAction(color));
+    this.store.dispatch(new ui.SetToolbarColorAction(color));
   }
 
   constructor(private store: Store<fromRoot.State>) {

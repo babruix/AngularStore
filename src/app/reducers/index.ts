@@ -1,18 +1,18 @@
-import {createSelector} from 'reselect';
-import {ActionReducer} from '@ngrx/store';
-import {compose} from '@ngrx/core/compose';
-import {storeLogger} from 'ngrx-store-logger';
-import {storeFreeze} from 'ngrx-store-freeze';
-import {combineReducers} from '@ngrx/store';
+import { createSelector } from 'reselect';
+import { ActionReducer } from '@ngrx/store';
+import { compose } from '@ngrx/core/compose';
+import { storeLogger } from 'ngrx-store-logger';
+import { storeFreeze } from 'ngrx-store-freeze';
+import { combineReducers } from '@ngrx/store';
 
-import {environment} from '../../environments/environment';
+import { environment } from '../../environments/environment';
 
 import * as cardsListModel from '../models/ICardsList';
 import * as uiModel from '../models/IUi';
 
 import * as fromCards from './cards';
 import * as fromUi from './ui';
-import {localStorageSync} from 'ngrx-store-localstorage';
+import { localStorageSync } from 'ngrx-store-localstorage';
 
 export interface State {
   CardsList: cardsListModel.CardsList;

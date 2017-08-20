@@ -1,15 +1,15 @@
 import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
-import {ICard} from '../models/ICard';
-import {Observable} from 'rxjs/Observable';
+import { ICard } from '../models/ICard';
+import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-card',
   template: `
     <div class="card" [ngStyle]="{'background-color': cardColor$ |async}">
       <div class="card-header text-right">
-        <button type="button" class="close btn btn-outline-secondary" 
+        <button type="button" class="close btn btn-outline-secondary"
                 aria-label="Close" ngbTooltip="{{card.removed ? 'Revive' : 'Remove'}}"
                 (click)="removeCard()">
           <i class="fa {{card.removed ? 'fa-undo' : 'fa-trash-o'}}" aria-hidden="true"></i>
@@ -36,15 +36,20 @@ import {Store} from '@ngrx/store';
       min-height: 5rem;
       box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
     }
+
     .close {
       margin: -12px -21px 0 0;
       padding: 0 5px;
     }
+
     .fa-undo:hover {
       animation: spin 1s infinite linear;
     }
+
     @keyframes spin {
-      to{transform:rotateZ(-720deg)}
+      to {
+        transform: rotateZ(-720deg)
+      }
     }
   `],
 })

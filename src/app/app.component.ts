@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import * as fromRoot from './reducers';
 
 @Component({
   selector: 'app-root',
-  template: `    
+  template: `
     <!-- Fixed navbar -->
     <nav class="navbar fixed-top"
          [ngStyle]="{'background-color': toolbarColor$ |async}">

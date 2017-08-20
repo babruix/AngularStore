@@ -1,4 +1,4 @@
-import {ICard} from './ICard';
+import { ICard } from './ICard';
 
 export interface CardsList {
   cards: Array<ICard>;

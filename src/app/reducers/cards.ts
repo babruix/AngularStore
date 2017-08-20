@@ -1,7 +1,7 @@
-import {Action} from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import * as cardsListModel from '../models/ICardsList';
 import * as cardActions from '../actions/card';
-import {merge, without, clone, trim} from 'lodash';
+import { merge, without, clone, trim } from 'lodash';
 
 
 export function reducer(state = cardsListModel.defaults, action: Action): cardsListModel.CardsList {

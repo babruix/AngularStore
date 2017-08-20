@@ -1,6 +1,6 @@
-import {Action} from '@ngrx/store';
-import {type} from 'utils/util';
-import {ICard} from '../models/ICard';
+import { Action } from '@ngrx/store';
+import { type } from 'utils/util';
+import { ICard } from '../models/ICard';
 
 export const ActionTypes = {
   ADD: type('[CardsList] Add Card'),

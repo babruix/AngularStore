@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import 'rxjs/add/operator/map';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
 import 'rxjs/add/operator/takeWhile';
 import * as cardActions from '../actions/card';
@@ -24,10 +24,10 @@ import * as cardActions from '../actions/card';
         <ngb-tab title="Others" *ngIf="anyNotPinned$ | async">
           <ng-template ngbTabContent>
             <div class="row card-columns">
-            <app-card *ngFor="let card of getPinned(false) | async"
-                      [card]="card"
-                      (onRemove)="removeCard($event)"
-                      (onPinnedToggle)="togglePinned($event)"></app-card>
+              <app-card *ngFor="let card of getPinned(false) | async"
+                        [card]="card"
+                        (onRemove)="removeCard($event)"
+                        (onPinnedToggle)="togglePinned($event)"></app-card>
             </div>
           </ng-template>
         </ngb-tab>
