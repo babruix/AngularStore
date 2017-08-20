@@ -7,16 +7,11 @@ import * as fromRoot from './reducers';
   selector: 'app-root',
   template: `
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top"
-         [ngClass]="{'bg-inverse': !(toolbarColor$ | async)}" [ngStyle]="{'background-color': toolbarColor$ |async}">
+    <nav class="navbar fixed-top"
+         [ngStyle]="{'background-color': toolbarColor$ |async}">
       <a class="navbar-brand" href="#">CPinner: Cards Pinner</a>
-      <app-color-input></app-color-input>
     </nav>
-    <div class="container-fluid text-center pb-5">
-      <div class="row justify-content-end">
-        <app-new-card-input></app-new-card-input>
-      </div>
-    </div>
+    <app-new-card-input></app-new-card-input>
     <app-card-list></app-card-list>
   `,
   styles: [],

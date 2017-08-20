@@ -1,10 +1,13 @@
 import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
 import {ICard} from '../models/ICard';
+import {Observable} from 'rxjs/Observable';
+import * as fromRoot from '../reducers';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-card',
   template: `
-    <div class="card">
+    <div class="card card-body" [ngStyle]="{'background-color': cardColor$ |async}">
       <div class="card-header text-right">
         <button type="button" class="close" aria-label="Close"
                 (click)="removeCard()">
@@ -32,7 +35,6 @@ import {ICard} from '../models/ICard';
       min-height: 200px;
       box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.4);
       padding: 1rem;
-      background-color: #fe0;
     }
     .custom-control-description {
       display: none;
@@ -46,9 +48,11 @@ export class CardComponent implements OnInit {
   @Input() card: ICard;
   @Output() 'onRemove' = new EventEmitter<ICard>();
   @Output() 'onPinnedToggle' = new EventEmitter<ICard>();
-  @HostBinding('class') classes = 'col-2';
+  @HostBinding('class') classes = 'col-3';
+  public cardColor$: Observable<string>;
 
-  constructor() {
+  constructor(private store: Store<fromRoot.State>) {
+    this.cardColor$ = this.store.select(fromRoot.getToolbarColor);
   }
 
   ngOnInit() {

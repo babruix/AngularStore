@@ -7,9 +7,14 @@ import * as cardActions from '../actions/card';
 @Component({
   selector: 'app-new-card-input',
   template: `
-    <div class="card">
-      <div class="card-block">
-        <input placeholder="Take a note..." class="form-control" name="text" [formControl]="newCardForm.controls['text']">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header">
+          <app-color-input></app-color-input>
+        </div>
+        <div class="card-block">
+          <input placeholder="Take a note..." class="form-control" name="text" [formControl]="newCardForm.controls['text']">
+        </div>
       </div>
     </div>
   `,

@@ -18,7 +18,7 @@ import * as cardActions from '../actions/card';
                   (onPinnedToggle)="togglePinned($event)"></app-card>
       </div>
     </div>
-    <div class=" container-fluid text-center pb-5">
+    <div class="container-fluid text-center pb-5">
       <div class="row">
         <p class="h6 col-2" *ngIf="anyPinned$ | async">Others</p>
       </div>

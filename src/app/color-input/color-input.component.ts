@@ -6,6 +6,7 @@ import * as ui from '../actions/ui';
 @Component({
   selector: 'app-color-input',
   template: `
+    <label>Choose color:</label>
     <input [(colorPicker)]="color"
            [style.background]="color"
            [value]="color"

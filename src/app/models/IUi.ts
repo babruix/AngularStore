@@ -3,5 +3,5 @@ export interface Ui {
 }
 
 export const defaults: Ui = {
-  toolbarColor: 'blue'
+  toolbarColor: '#cccccc'
 };
