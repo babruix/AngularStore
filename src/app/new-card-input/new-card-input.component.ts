@@ -21,8 +21,8 @@ import * as cardActions from '../actions/card';
   styles: [
     `
       .card { 
-        margin-bottom: 3rem; 
-        margin-top: -3em;
+        margin-bottom: 1rem; 
+        margin-top: -4em;
       }
     `,
   ],

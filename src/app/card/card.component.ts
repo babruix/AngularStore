@@ -7,14 +7,14 @@ import {Store} from '@ngrx/store';
 @Component({
   selector: 'app-card',
   template: `
-    <div class="card card-body" [ngStyle]="{'background-color': cardColor$ |async}">
+    <div class="card" [ngStyle]="{'background-color': cardColor$ |async}">
       <div class="card-header text-right">
-        <button type="button" class="close" aria-label="Close"
+        <button type="button" class="close btn btn-outline-secondary" aria-label="Close"
                 (click)="removeCard()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="card-block">
+      <div class="card-body">
         <p class="card-text">{{ card.text }}</p>
       </div>
       <div class="card-footer text-muted">
@@ -32,15 +32,18 @@ import {Store} from '@ngrx/store';
     .card {
       margin-bottom: 1rem;
       position: relative;
-      min-height: 200px;
-      box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.4);
-      padding: 1rem;
+      min-height: 5rem;
+      box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
     }
     .custom-control-description {
       display: none;
     }
     .custom-control:hover .custom-control-description {
       display: block;
+    }
+    .close {
+      margin: -12px -21px 0 0;
+      padding: 0 5px;
     }
   `],
 })

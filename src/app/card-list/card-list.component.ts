@@ -10,8 +10,8 @@ import * as cardActions from '../actions/card';
   selector: 'app-card-list',
   template: `
     <div class="container-fluid text-center pb-5" *ngIf="anyPinned$ | async">
-      <div class="row"><p class="h6 col-2">Pinned</p></div>
-      <div class="row">
+      <div class="row"><p class="h6 col-1 badge badge-pill badge-success">Pinned</p></div>
+      <div class="row card-columns">
         <app-card *ngFor="let card of getPinned() | async"
                   [card]="card"
                   (onRemove)="removeCard($event)"
@@ -20,9 +20,9 @@ import * as cardActions from '../actions/card';
     </div>
     <div class="container-fluid text-center pb-5">
       <div class="row">
-        <p class="h6 col-2" *ngIf="anyPinned$ | async">Others</p>
+        <p class="h6 col-1 badge badge-pill badge-default" *ngIf="anyPinned$ | async">Others</p>
       </div>
-      <div class="row">
+      <div class="row card-columns">
         <app-card *ngFor="let card of getPinned(false) | async"
                   [card]="card"
                   (onRemove)="removeCard($event)"
