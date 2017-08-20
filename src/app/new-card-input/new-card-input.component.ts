@@ -47,7 +47,7 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
 
   newCardForm: FormGroup;
   private alive = true;
-  private _success = new Subject<string>();
+  private success = new Subject<string>();
   successMessage: string;
 
   @HostListener('document:keypress', ['$event'])
@@ -68,9 +68,10 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._success.subscribe((message) => this.successMessage = message);
-    debounceTime.call(this._success, 2000).subscribe(() => this.successMessage = null);
-    this._success.subscribe((message) => this.successMessage = message);
+    this.success
+      .subscribe((message) => this.successMessage = message);
+    debounceTime.call(this.success, 2000)
+      .subscribe(() => this.successMessage = null);
   }
 
   ngOnDestroy() {
@@ -80,10 +81,11 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
   addCard(text) {
     this.store.dispatch(new cardActions.AddCardAction(text));
     this.newCardForm.reset();
-    this.changeSuccessMessage();
+    this.showSuccessMessage();
   }
 
-  public changeSuccessMessage() {
-    this._success.next(`New card was successfully created.`);
+  public showSuccessMessage() {
+    this.success
+      .next(`New card was successfully created.`);
   }
 }

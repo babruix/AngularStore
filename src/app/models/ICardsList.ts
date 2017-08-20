@@ -1,7 +1,7 @@
 import {ICard} from './ICard';
 
 export interface CardsList {
-  cards: Array<ICard>
+  cards: Array<ICard>;
 }
 
 export const defaults: CardsList = {

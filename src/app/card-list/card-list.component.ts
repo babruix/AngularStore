@@ -31,9 +31,14 @@ import * as cardActions from '../actions/card';
             </div>
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="Removed" *ngIf="anyPinned$ | async">
+        <ngb-tab title="Removed" *ngIf="anyRemoved$ | async">
           <ng-template ngbTabContent>
-            
+            <div class="row card-columns">
+              <app-card *ngFor="let card of getRemoved() | async"
+                        [card]="card"
+                        (onRemove)="removeCard($event)"
+                        (onPinnedToggle)="togglePinned($event)"></app-card>
+            </div>
           </ng-template>
         </ngb-tab>
       </ngb-tabset>
@@ -45,10 +50,15 @@ import * as cardActions from '../actions/card';
 })
 export class CardListComponent implements OnInit, OnDestroy {
   public anyPinned$: Observable<boolean>;
+  public anyRemoved$: Observable<boolean>;
   private alive = true;
 
   constructor(private store: Store<fromRoot.State>) {
     this.anyPinned$ = this.getPinned()
+      .takeWhile(() => this.alive)
+      .map((cards) => cards.length > 0);
+
+    this.anyRemoved$ = this.getRemoved()
       .takeWhile(() => this.alive)
       .map((cards) => cards.length > 0);
 
@@ -68,9 +78,11 @@ export class CardListComponent implements OnInit, OnDestroy {
   getPinned(pinned = true) {
     return this.store.select(fromRoot.getCards)
       .takeWhile(() => this.alive)
-      .map((cardArr) => cardArr.filter(card => pinned
-        ? card.pinned === true
-        : card.pinned !== true));
+      .map((cardArr) => cardArr
+        .filter(card => pinned
+          ? card.pinned === true
+          : card.pinned !== true)
+        .filter(card => card.removed !== true));
   }
 
   removeCard(card) {
@@ -79,5 +91,12 @@ export class CardListComponent implements OnInit, OnDestroy {
 
   togglePinned(card) {
     this.store.dispatch(new cardActions.TogglePinnedAction(card));
+  }
+
+  getRemoved() {
+    return this.store.select(fromRoot.getCards)
+      .takeWhile(() => this.alive)
+      .map((cardArr) => cardArr
+        .filter(card => card.removed === true));
   }
 }

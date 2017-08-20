@@ -10,9 +10,9 @@ import {Store} from '@ngrx/store';
     <div class="card" [ngStyle]="{'background-color': cardColor$ |async}">
       <div class="card-header text-right">
         <button type="button" class="close btn btn-outline-secondary" 
-                aria-label="Close" ngbTooltip="Remove"
+                aria-label="Close" ngbTooltip="{{card.removed ? 'Revive' : 'Remove'}}"
                 (click)="removeCard()">
-          <i class="fa fa-trash-o" aria-hidden="true"></i>
+          <i class="fa {{card.removed ? 'fa-undo' : 'fa-trash-o'}}" aria-hidden="true"></i>
         </button>
       </div>
       <div class="card-body text-center">
