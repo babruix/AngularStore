@@ -6,18 +6,21 @@ import {ICard} from '../models/ICard';
   template: `
     <div class="card">
       <div class="card-header text-right">
-        <button type="button" class="close" aria-label="Close" (click)="removeCard()">
-          <span>&times;</span>
+        <button type="button" class="close" aria-label="Close"
+                (click)="removeCard()">
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="card-block">
         <p class="card-text">{{ card.text }}</p>
       </div>
       <div class="card-footer text-muted">
-        <label class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" [checked]="card.pinned"
-                 (change)="updatePinned()"/>
+        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+          <input type="checkbox" class="custom-control-input"
+                 [checked]="card.pinned"
+                 (change)="updatePinned()">
           <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">{{ card.pinned === true ? 'Unpin?' : 'Pin?' }}</span>
         </label>
       </div>
     </div>
@@ -30,6 +33,12 @@ import {ICard} from '../models/ICard';
       box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.4);
       padding: 1rem;
       background-color: #fe0;
+    }
+    .custom-control-description {
+      display: none;
+    }
+    .custom-control:hover .custom-control-description {
+      display: block;
     }
   `],
 })
