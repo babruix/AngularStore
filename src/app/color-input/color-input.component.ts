@@ -7,12 +7,17 @@ import * as ui from '../actions/ui';
   selector: 'app-color-input',
   template: `
     <label>Choose color:</label>
-    <input [(colorPicker)]="color"
+    <input class="form-control"
+           [(colorPicker)]="color"
            [style.background]="color"
            [value]="color"
            (colorPickerChange)="changeColor($event)"/>
   `,
-  styles: []
+  styles: [`
+    input.form-control {
+      width: 100px;
+    }
+  `]
 })
 export class ColorInputComponent implements OnInit {
   public color: string;
