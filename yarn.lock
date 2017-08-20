@@ -3130,6 +3130,10 @@ ngx-color-picker:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/ngx-color-picker/-/ngx-color-picker-4.3.1.tgz#e7761753c968e480279e7639e7c3eff08b0690f5"
 
+ngxani:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/ngxani/-/ngxani-1.2.2.tgz#af7e742fa546c26484ab1167d5b0674ea8dd06dd"
+
 no-case@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.1.tgz#7aeba1c73a52184265554b7dc03baf720df80081"

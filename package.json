@@ -32,6 +32,7 @@
     "ngrx-store-localstorage": "^0.2.0",
     "ngrx-store-logger": "^0.2.0",
     "ngx-color-picker": "^4.3.1",
+    "ngxani": "^1.2.2",
     "reselect": "^3.0.1",
     "rxjs": "^5.4.1",
     "sass": "^1.0.0-beta.2",

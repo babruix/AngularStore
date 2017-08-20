@@ -1,8 +1,9 @@
-import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { ICard } from '../models/ICard';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
 import { Store } from '@ngrx/store';
+import { AnimateDirective } from '../directives/animate.directive';
 
 @Component({
   selector: 'app-card',
@@ -60,18 +61,29 @@ export class CardComponent implements OnInit {
   @HostBinding('class') classes = 'col-3';
   public cardColor$: Observable<string>;
 
-  constructor(private store: Store<fromRoot.State>) {
+  constructor(private store: Store<fromRoot.State>
+              , private cardElement: ElementRef
+              , private animate: AnimateDirective) {
     this.cardColor$ = this.store.select(fromRoot.getToolbarColor);
   }
 
   ngOnInit() {
+    this.store.select(fromRoot.getToolbarColor)
+      .subscribe(color => {
+        this.animate.animateColor(this.cardElement.nativeElement.querySelector('.card'), color);
+      });
+    this.animate.animationIn(this.cardElement);
   }
 
   removeCard() {
-    this.onRemove.emit(this.card);
+    this.animate.animationOut(this.cardElement, () => {
+      this.onRemove.emit(this.card);
+    });
   }
 
   updatePinned() {
-    this.onPinnedToggle.emit(this.card);
+    this.animate.animationOut(this.cardElement, () => {
+      this.onPinnedToggle.emit(this.card);
+    });
   }
 }

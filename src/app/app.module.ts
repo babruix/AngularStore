@@ -11,6 +11,8 @@ import { reducer } from './reducers/index';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorInputComponent } from './color-input/color-input.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { NgxAniModule } from 'ngxani';
+import { AnimateDirective } from './directives/animate.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     CardComponent,
     CardListComponent,
     NewCardInputComponent,
-    ColorInputComponent
+    ColorInputComponent,
+    AnimateDirective
   ],
   imports: [
     BrowserModule,
@@ -26,9 +29,10 @@ import { ColorPickerModule } from 'ngx-color-picker';
     ReactiveFormsModule,
     StoreModule.provideStore(reducer),
     ColorPickerModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    NgxAniModule
   ],
-  providers: [],
+  providers: [AnimateDirective],
   bootstrap: [AppComponent]
 })
 export class AppModule {

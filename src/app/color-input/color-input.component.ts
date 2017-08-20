@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import * as ui from '../actions/ui';
+import { AnimateDirective } from '../directives/animate.directive';
 
 @Component({
   selector: 'app-color-input',
@@ -35,14 +36,18 @@ export class ColorInputComponent implements OnInit {
     this.store.dispatch(new ui.SetToolbarColorAction(color));
   }
 
-  constructor(private store: Store<fromRoot.State>) {
+  constructor(private store: Store<fromRoot.State>
+    , private element: ElementRef
+    , private animate: AnimateDirective) {
   }
 
   ngOnInit() {
     this.store.select(fromRoot.getToolbarColor)
-      .subscribe(s => {
-        this.color = s;
+      .subscribe(color => {
+        this.animate
+          .animateColor(this.element.nativeElement.querySelector('.form-control')
+            , color
+            , () => this.color = color);
       });
   }
-
 }
