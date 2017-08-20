@@ -40,6 +40,12 @@ import {Store} from '@ngrx/store';
       margin: -12px -21px 0 0;
       padding: 0 5px;
     }
+    .fa-undo:hover {
+      animation: spin 1s infinite linear;
+    }
+    @keyframes spin {
+      to{transform:rotateZ(-720deg)}
+    }
   `],
 })
 export class CardComponent implements OnInit {
