@@ -27,7 +27,8 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
 
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.charCode === 13 && this.newCardForm.valid) {
+    const enterKey = event.keyCode ? event.keyCode : event.which;
+    if (enterKey === 13 && this.newCardForm.valid) {
       this.addCard(this.newCardForm.controls['text'].value);
     }
   }
