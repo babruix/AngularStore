@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
+import { Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import * as ui from '../actions/ui';
 
 @Component({
   selector: 'app-color-input',
   template: `
-    <input [(colorPicker)]="color" 
+    <input [(colorPicker)]="color"
            [style.background]="color"
+           [value]="color"
            (colorPickerChange)="changeColor($event)"/>
   `,
   styles: []
@@ -23,6 +24,10 @@ export class ColorInputComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.store.select(fromRoot.getToolbarColor)
+      .subscribe(s => {
+        this.color = s;
+      });
   }
 
 }
