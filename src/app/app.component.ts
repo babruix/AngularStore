@@ -5,11 +5,14 @@ import * as fromRoot from './reducers';
 
 @Component({
   selector: 'app-root',
-  template: `
+  template: `    
     <!-- Fixed navbar -->
     <nav class="navbar fixed-top"
          [ngStyle]="{'background-color': toolbarColor$ |async}">
-      <a class="navbar-brand" href="#">CPinner: Cards Pinner</a>
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-id-card-o" aria-hidden="true"></i>
+        CPinner: Cards Pinner
+      </a>
     </nav>
     <app-new-card-input></app-new-card-input>
     <app-card-list></app-card-list>

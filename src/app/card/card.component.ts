@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import {ICard} from '../models/ICard';
 import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
@@ -9,37 +9,32 @@ import {Store} from '@ngrx/store';
   template: `
     <div class="card" [ngStyle]="{'background-color': cardColor$ |async}">
       <div class="card-header text-right">
-        <button type="button" class="close btn btn-outline-secondary" aria-label="Close"
+        <button type="button" class="close btn btn-outline-secondary" 
+                aria-label="Close" ngbTooltip="Remove"
                 (click)="removeCard()">
-          <span aria-hidden="true">&times;</span>
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="card-body">
+      <div class="card-body text-center">
         <p class="card-text">{{ card.text }}</p>
       </div>
       <div class="card-footer text-muted">
-        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" ngbTooltip="{{ card.pinned === true ? 'Unpin?' : 'Pin?' }}">
           <input type="checkbox" class="custom-control-input"
                  [checked]="card.pinned"
                  (change)="updatePinned()">
           <span class="custom-control-indicator"></span>
-          <span class="custom-control-description">{{ card.pinned === true ? 'Unpin?' : 'Pin?' }}</span>
         </label>
       </div>
     </div>
   `,
   styles: [`
     .card {
+      margin-top: 1rem;
       margin-bottom: 1rem;
       position: relative;
       min-height: 5rem;
       box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
-    }
-    .custom-control-description {
-      display: none;
-    }
-    .custom-control:hover .custom-control-description {
-      display: block;
     }
     .close {
       margin: -12px -21px 0 0;

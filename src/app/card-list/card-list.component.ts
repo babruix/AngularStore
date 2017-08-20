@@ -9,28 +9,39 @@ import * as cardActions from '../actions/card';
 @Component({
   selector: 'app-card-list',
   template: `
-    <div class="container-fluid text-center pb-5" *ngIf="anyPinned$ | async">
-      <div class="row"><p class="h6 col-1 badge badge-pill badge-success">Pinned</p></div>
-      <div class="row card-columns">
-        <app-card *ngFor="let card of getPinned() | async"
-                  [card]="card"
-                  (onRemove)="removeCard($event)"
-                  (onPinnedToggle)="togglePinned($event)"></app-card>
-      </div>
-    </div>
-    <div class="container-fluid text-center pb-5">
-      <div class="row">
-        <p class="h6 col-1 badge badge-pill badge-default" *ngIf="anyPinned$ | async">Others</p>
-      </div>
-      <div class="row card-columns">
-        <app-card *ngFor="let card of getPinned(false) | async"
-                  [card]="card"
-                  (onRemove)="removeCard($event)"
-                  (onPinnedToggle)="togglePinned($event)"></app-card>
-      </div>
+    <div class="container-fluid">
+      <ngb-tabset type="pills">
+        <ngb-tab title="Pinned" *ngIf="anyPinned$ | async">
+          <ng-template ngbTabContent>
+            <div class="row card-columns">
+              <app-card *ngFor="let card of getPinned() | async"
+                        [card]="card"
+                        (onRemove)="removeCard($event)"
+                        (onPinnedToggle)="togglePinned($event)"></app-card>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Others" >
+          <ng-template ngbTabContent>
+            <div class="row card-columns">
+            <app-card *ngFor="let card of getPinned(false) | async"
+                      [card]="card"
+                      (onRemove)="removeCard($event)"
+                      (onPinnedToggle)="togglePinned($event)"></app-card>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Removed" *ngIf="anyPinned$ | async">
+          <ng-template ngbTabContent>
+            
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
     </div>
   `,
-  styles: []
+  styles: [`
+
+  `]
 })
 export class CardListComponent implements OnInit, OnDestroy {
   public anyPinned$: Observable<boolean>;

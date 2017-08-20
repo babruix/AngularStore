@@ -6,16 +6,24 @@ import * as ui from '../actions/ui';
 @Component({
   selector: 'app-color-input',
   template: `
-    <label>Choose color:</label>
     <input class="form-control"
            [(colorPicker)]="color"
            [style.background]="color"
            [value]="color"
-           (colorPickerChange)="changeColor($event)"/>
+           (colorPickerChange)="changeColor($event)"
+           ngbTooltip="Choose interface color"/>
+    <i class="fa fa-eyedropper" aria-hidden="true"></i>
   `,
   styles: [`
     input.form-control {
-      width: 100px;
+      width: 110px;
+      padding-left: 28px;
+      cursor: pointer;
+    }
+    .fa-eyedropper {
+      float: left;
+      padding: 0 7px;
+      margin-top: -28px;
     }
   `]
 })
