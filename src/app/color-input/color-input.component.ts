@@ -38,13 +38,21 @@ export class ColorInputComponent implements OnInit {
 
   constructor(private store: Store<fromRoot.State>
     , private element: ElementRef
-    , private animate: AnimateDirective) {
+    , private animator: AnimateDirective) {
+
+    // Set initial color.
+    this.store.select(fromRoot.getToolbarColor)
+      .subscribe(color => {
+        this.color = color;
+      });
   }
 
   ngOnInit() {
+
+    // Transition animation to new color.
     this.store.select(fromRoot.getToolbarColor)
       .subscribe(color => {
-        this.animate
+        this.animator
           .animateColor(this.element.nativeElement.querySelector('.form-control')
             , color
             , () => this.color = color);

@@ -24,14 +24,14 @@ export class AppComponent implements OnInit {
 
   constructor(private store: Store<fromRoot.State>
               , private element: ElementRef
-              , private animate: AnimateDirective) {
+              , private animator: AnimateDirective) {
     this.toolbarColor$ = this.store.select(fromRoot.getToolbarColor);
   }
 
   ngOnInit() {
     this.store.select(fromRoot.getToolbarColor)
       .subscribe(color => {
-        this.animate
+        this.animator
           .animateColor(this.element.nativeElement.querySelector('nav'), color);
       });
   }

@@ -63,26 +63,26 @@ export class CardComponent implements OnInit {
 
   constructor(private store: Store<fromRoot.State>
               , private cardElement: ElementRef
-              , private animate: AnimateDirective) {
+              , private animator: AnimateDirective) {
     this.cardColor$ = this.store.select(fromRoot.getToolbarColor);
   }
 
   ngOnInit() {
     this.store.select(fromRoot.getToolbarColor)
       .subscribe(color => {
-        this.animate.animateColor(this.cardElement.nativeElement.querySelector('.card'), color);
+        this.animator.animateColor(this.cardElement.nativeElement.querySelector('.card'), color);
       });
-    this.animate.animationIn(this.cardElement);
+    this.animator.animationIn(this.cardElement);
   }
 
   removeCard() {
-    this.animate.animationOut(this.cardElement, () => {
+    this.animator.animationOut(this.cardElement, () => {
       this.onRemove.emit(this.card);
     });
   }
 
   updatePinned() {
-    this.animate.animationOut(this.cardElement, () => {
+    this.animator.animationOut(this.cardElement, () => {
       this.onPinnedToggle.emit(this.card);
     });
   }

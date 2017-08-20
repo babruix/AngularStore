@@ -10,7 +10,7 @@ import * as cardActions from '../actions/card';
   selector: 'app-card-list',
   template: `
     <div class="container-fluid">
-      <ngb-tabset type="pills">
+      <ngb-tabset>
         <ngb-tab title="Pinned" *ngIf="anyPinned$ | async">
           <ng-template ngbTabContent>
             <div class="row card-columns">

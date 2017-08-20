@@ -1,15 +1,16 @@
-import { Component, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operator/debounceTime';
 import * as fromRoot from '../reducers';
 import * as cardActions from '../actions/card';
+import { AnimateDirective } from '../directives/animate.directive';
 
 @Component({
   selector: 'app-new-card-input',
   template: `
-    <div class="container-fluid">
+    <div class="container">
       <div class="card">
         <div class="card-header">
           <app-color-input></app-color-input>
@@ -20,7 +21,10 @@ import * as cardActions from '../actions/card';
                  ngbTooltip="Fill in text for your new card and press Enter">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
-        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+        <ngb-alert *ngIf="successMessage" type="success" 
+                   (close)="successMessage = ''">
+          {{ successMessage }}
+        </ngb-alert>
       </div>
     </div>
   `,
@@ -60,20 +64,32 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private store: Store<fromRoot.State>, fb: FormBuilder) {
+  constructor(private store: Store<fromRoot.State>
+              , fb: FormBuilder
+              , private cardElement: ElementRef
+              , private animator: AnimateDirective) {
+
     this.newCardForm = fb.group({
       'text': [null, Validators.compose([
-          Validators.required, Validators.minLength(2)
+        Validators.required, Validators.minLength(2)
         ]
       )],
     });
   }
 
   ngOnInit() {
+    this.store.select(fromRoot.getToolbarColor)
+      .subscribe(color => {
+        this.animator.animateColor(this.cardElement.nativeElement.querySelector('.card'), color);
+      });
+
     this.success
       .subscribe((message) => this.successMessage = message);
+
     debounceTime.call(this.success, 2000)
       .subscribe(() => this.successMessage = null);
+
+    this.animator.animationIn(this.cardElement);
   }
 
   ngOnDestroy() {
