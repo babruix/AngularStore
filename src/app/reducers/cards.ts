@@ -9,7 +9,9 @@ export function reducer(state = cardsListModel.defaults, action: Action): cardsL
 
   switch (action.type) {
     case cardActions.ActionTypes.ADD:
-      return merge({}, state, {cards: [...state.cards, {text: trim(action.payload)}]});
+      return merge({}, state, {
+        cards: [{text: trim(action.payload)}, ...state.cards]
+      });
 
     case cardActions.ActionTypes.REMOVE:
       stateCopy.cards = [];
@@ -19,7 +21,7 @@ export function reducer(state = cardsListModel.defaults, action: Action): cardsL
       const card = clone(action.payload);
       stateCopy.cards = without(state.cards, action.payload);
       card.pinned = !card.pinned;
-      stateCopy.cards.push(card);
+      stateCopy.cards.unshift(card);
       return merge({}, stateCopy);
 
     default:

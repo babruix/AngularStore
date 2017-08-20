@@ -19,7 +19,12 @@ import * as cardActions from '../actions/card';
     </div>
   `,
   styles: [
-    '.card { margin-bottom: 1.5rem; }',
+    `
+      .card { 
+        margin-bottom: 3rem; 
+        margin-top: -3em;
+      }
+    `,
   ],
 })
 export class NewCardInputComponent implements OnInit, OnDestroy {
