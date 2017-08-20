@@ -21,7 +21,7 @@ import * as cardActions from '../actions/card';
             </div>
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="Others" >
+        <ngb-tab title="Others" *ngIf="anyNotPinned$ | async">
           <ng-template ngbTabContent>
             <div class="row card-columns">
             <app-card *ngFor="let card of getPinned(false) | async"
@@ -50,11 +50,16 @@ import * as cardActions from '../actions/card';
 })
 export class CardListComponent implements OnInit, OnDestroy {
   public anyPinned$: Observable<boolean>;
+  public anyNotPinned$: Observable<boolean>;
   public anyRemoved$: Observable<boolean>;
   private alive = true;
 
   constructor(private store: Store<fromRoot.State>) {
     this.anyPinned$ = this.getPinned()
+      .takeWhile(() => this.alive)
+      .map((cards) => cards.length > 0);
+
+    this.anyNotPinned$ = this.getPinned(false)
       .takeWhile(() => this.alive)
       .map((cards) => cards.length > 0);
 
