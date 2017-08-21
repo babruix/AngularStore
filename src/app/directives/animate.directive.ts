@@ -42,4 +42,33 @@ export class AnimateDirective {
       'ease': this.ngxAni.ease.easeInOutCirc,
     });
   }
+
+  slideDownIn(dom: ElementRef) {
+    this.ngxAni.fromTo(dom, 0.5, {
+      'margin-top': '-100px',
+      'z-index': '-1',
+      'opacity': '0',
+      'ease': this.ngxAni.ease.easeInOutCirc,
+    }, {
+      'margin-top': '0',
+      'opacity': '1',
+      'ease': this.ngxAni.ease.easeInOutCirc,
+    });
+  }
+
+  slideUpOut(dom: ElementRef, completeCallback = () => {}) {
+    if (!dom) {
+      return;
+    }
+    this.ngxAni.fromTo(dom, 0.5, {
+      'margin-top': '0',
+      'ease': this.ngxAni.ease.easeInOutCirc,
+    }, {
+      'margin-top': '-100px',
+      'opacity': '0',
+      'z-index': '-1',
+      'ease': this.ngxAni.ease.easeInOutCirc,
+      'onComplete': completeCallback
+    });
+  }
 }

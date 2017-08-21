@@ -22,7 +22,7 @@ import { AnimateDirective } from '../directives/animate.directive';
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
         <ngb-alert *ngIf="successMessage" type="success" 
-                   (close)="successMessage = ''">
+                   (close)="hideMessage()">
           {{ successMessage }}
         </ngb-alert>
       </div>
@@ -43,6 +43,9 @@ import { AnimateDirective } from '../directives/animate.directive';
         float: left;
         padding: 0 7px;
         margin-top: -28px;
+      }
+      .alert {
+        opacity: 0;
       }
     `,
   ],
@@ -84,10 +87,14 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
       });
 
     this.success
-      .subscribe((message) => this.successMessage = message);
+      .subscribe((message) => {
+        this.successMessage = message;
+        setTimeout(() => this.animator
+          .slideDownIn(this.cardElement.nativeElement.querySelector('.alert')), 1);
+      });
 
-    debounceTime.call(this.success, 2000)
-      .subscribe(() => this.successMessage = null);
+    debounceTime.call(this.success, 5000)
+      .subscribe(() => this.hideMessage());
 
     this.animator.animationIn(this.cardElement);
   }
@@ -105,5 +112,11 @@ export class NewCardInputComponent implements OnInit, OnDestroy {
   public showSuccessMessage() {
     this.success
       .next(`New card was successfully created.`);
+  }
+
+  hideMessage() {
+    this.animator
+      .slideUpOut(this.cardElement.nativeElement.querySelector('.alert')
+        , () => this.successMessage = '');
   }
 }
