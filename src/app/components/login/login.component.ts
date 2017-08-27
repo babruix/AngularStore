@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 @Component({
   selector: 'app-login',
   template: `
+    LOGIN>
     <div class="login-frame">
       <button class="btn btn-default" (click)="login()" *ngIf="!(user | async)?.uid">
         <img src="../../assets/google-icon.png">
@@ -15,7 +16,13 @@ import * as firebase from 'firebase/app';
       <button class="btn btn-default" (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
     </div>
   `,
-  styles: []
+  styles: [
+    `
+      .user-photo {
+        max-width: 200px;
+      }
+    `
+  ]
 })
 export class LoginComponent implements OnInit {
 

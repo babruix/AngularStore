@@ -12,28 +12,27 @@ import * as firebase from 'firebase/app';
   selector: 'app-new-product-input',
   template: `
     <div class="container">
-    
       <div class="card">
         <div class="card-header">
-          <app-login></app-login>
+          <h1>Add a Product</h1>
           <app-color-input></app-color-input>
         </div>
         <div class="card-block">
           <input placeholder="Title" class="form-control" name="title"
                  [formControl]="newProductForm.controls['title']"
-                 ngbTooltip="Fill in Title... and press Tab">
+                 ngbTooltip="Fill in Title">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
         <div class="card-block">
           <input placeholder="Price" class="form-control" name="price"
                  [formControl]="newProductForm.controls['price']"
-                 ngbTooltip="Fill in Price for your new product and press Enter">
+                 ngbTooltip="Fill in Price">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
         <div class="card-block">
           <input placeholder="Product Description..." class="form-control" name="description"
                  [formControl]="newProductForm.controls['description']"
-                 ngbTooltip="Fill in Description and press Tab">
+                 ngbTooltip="Fill in Description">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
         <ngb-alert *ngIf="successMessage" type="success" 

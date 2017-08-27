@@ -13,9 +13,14 @@ import { AnimateDirective } from './directives/animate.directive';
         <i class="fa fa-2x fa-id-product-o" aria-hidden="true"></i>
         Angular Store: Toptal Academy evaluation project
       </a>
+      <ul class="nav navbar-nav" routerLinkActive="active">
+        <li class="nav-item"><a class="nav-link" routerLink="login">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="admin">Admin</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="store">Store</a></li>
+      </ul>
     </nav>
-    <app-new-product-input></app-new-product-input>
-    <app-product-list></app-product-list>
+
+    <router-outlet></router-outlet>
   `,
   styles: [],
 })
