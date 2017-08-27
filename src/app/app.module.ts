@@ -6,13 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './reducers/index';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ColorInputComponent } from './color-input/color-input.component';
+import { ColorInputComponent } from './components/color-input/color-input.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { NgxAniModule } from 'ngxani';
 import { AnimateDirective } from './directives/animate.directive';
-import { ProductComponent } from './product/product.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { NewProductInputComponent } from './new-product-input/new-product-input.component';
+import { ProductComponent } from './components/product/product.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
 
 @NgModule({
   declarations: [

@@ -1,9 +1,9 @@
 import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
-import { IProduct } from '../models/IProduct';
+import { IProduct } from '../../models/IProduct';
 import { Observable } from 'rxjs/Observable';
-import * as fromRoot from '../reducers';
+import * as fromRoot from '../../reducers';
 import { Store } from '@ngrx/store';
-import { AnimateDirective } from '../directives/animate.directive';
+import { AnimateDirective } from '../../directives/animate.directive';
 
 @Component({
   selector: 'app-product',

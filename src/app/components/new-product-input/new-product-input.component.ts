@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operator/debounceTime';
-import * as fromRoot from '../reducers';
-import * as productActions from '../actions/product';
-import { AnimateDirective } from '../directives/animate.directive';
+import * as fromRoot from '../../reducers';
+import * as productActions from '../../actions/product';
+import { AnimateDirective } from '../../directives/animate.directive';
 
 @Component({
   selector: 'app-new-product-input',

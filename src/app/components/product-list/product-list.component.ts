@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import * as fromRoot from '../reducers';
+import * as fromRoot from '../../reducers';
 import 'rxjs/add/operator/takeWhile';
-import * as productActions from '../actions/product';
+import * as productActions from '../../actions/product';
 
 @Component({
   selector: 'app-product-list',

@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../reducers';
-import * as ui from '../actions/ui';
-import { AnimateDirective } from '../directives/animate.directive';
+import * as fromRoot from '../../reducers';
+import * as ui from '../../actions/ui';
+import { AnimateDirective } from '../../directives/animate.directive';
 
 @Component({
   selector: 'app-color-input',
