@@ -1,10 +1,7 @@
 import { Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operator/debounceTime';
-import * as fromRoot from '../../reducers';
-import * as productActions from '../../actions/product';
 import { AnimateDirective } from '../../directives/animate.directive';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -15,10 +12,10 @@ import * as firebase from 'firebase/app';
   selector: 'app-new-product-input',
   template: `
     <div class="container">
+    
       <div class="card">
         <div class="card-header">
-          <button (click)="login()" *ngIf="!(user | async)?.uid">Anonymous Login</button>
-          <button (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
+          <app-login></app-login>
           <app-color-input></app-color-input>
         </div>
         <div class="card-block">

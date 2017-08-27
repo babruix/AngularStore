@@ -1,23 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './reducers/index';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ColorInputComponent } from './components/color-input/color-input.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { NgxAniModule } from 'ngxani';
 import { AnimateDirective } from './directives/animate.directive';
-import { ProductComponent } from './components/product/product.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
-import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpModule } from '@angular/http';
+
+// services
+import { GlobalService } from './services/global.service';
+import { AuthGuard } from './services/auth-guard.service';
+
+// components
+import { AppComponent } from './app.component';
+import { LoginComponent } from 'app/components/login/login.component';
+import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
+import { ColorInputComponent } from './components/color-input/color-input.component';
+import { ProductComponent } from './components/product/product.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +33,7 @@ import { HttpModule } from '@angular/http';
     ProductListComponent,
     NewProductInputComponent,
     ColorInputComponent,
+    LoginComponent,
     AnimateDirective
   ],
   imports: [
@@ -41,7 +49,7 @@ import { HttpModule } from '@angular/http';
     NgbModule.forRoot(),
     NgxAniModule
   ],
-  providers: [AnimateDirective],
+  providers: [GlobalService, AuthGuard, AnimateDirective],
   bootstrap: [AppComponent]
 })
 export class AppModule {
