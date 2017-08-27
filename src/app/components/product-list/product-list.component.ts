@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import * as fromRoot from '../../reducers';
-import 'rxjs/add/operator/takeWhile';
-import * as productActions from '../../actions/product';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-product-list',
@@ -14,14 +11,14 @@ import * as productActions from '../../actions/product';
         <ngb-tab title="Products Catalog">
           <ng-template ngbTabContent>
             <div class="row product-columns">
-              <app-product *ngFor="let product of getAllProducts() | async"
+              <app-product *ngFor="let product of products | async"
                            [product]="product"
                            (onRemove)="removeProduct($event)"
                            (onInCartToggle)="toggleCart($event)"></app-product>
             </div>
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="Your Cart" *ngIf="anyInCart$ | async">
+        <ngb-tab title="Your Cart">
           <ng-template ngbTabContent>
             <div class="row product-columns">
               <app-product *ngFor="let product of getInCart() | async"
@@ -39,18 +36,12 @@ import * as productActions from '../../actions/product';
   `]
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  public anyInCart$: Observable<boolean>;
+  products: FirebaseListObservable<any>;
   private alive = true;
 
-  constructor(private store: Store<fromRoot.State>) {
-    this.anyInCart$ = this.getInCart()
-      .takeWhile(() => this.alive)
-      .map((products) => products.length > 0);
-
-    this.store
-      .select(fromRoot.getProducts)
-      .takeWhile(() => this.alive)
-      .map(products => products.length > 0);
+  constructor(public db: AngularFireDatabase
+    ) {
+    this.products = db.list('/products');
   }
 
   ngOnInit() {
@@ -60,23 +51,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.alive = false;
   }
 
-  getAllProducts() {
-    return this.store.select(fromRoot.getProducts)
-      .takeWhile(() => this.alive);
-  }
-
   getInCart() {
-    return this.store.select(fromRoot.getProducts)
-      .takeWhile(() => this.alive)
+    return this.products
       .map((productArr) => productArr
         .filter(product => product.inCart));
   }
 
   removeProduct(product) {
-    this.store.dispatch(new productActions.RemoveAction(product));
+    // this.store.dispatch(new productActions.RemoveAction(product));
   }
 
   toggleCart(product) {
-    this.store.dispatch(new productActions.ToggleCartAction(product));
+    // this.store.dispatch(new productActions.ToggleCartAction(product));
   }
 }

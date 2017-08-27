@@ -13,6 +13,11 @@ import { AnimateDirective } from './directives/animate.directive';
 import { ProductComponent } from './components/product/product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +30,11 @@ import { NewProductInputComponent } from './components/new-product-input/new-pro
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     ReactiveFormsModule,
     StoreModule.provideStore(reducer),
     ColorPickerModule,

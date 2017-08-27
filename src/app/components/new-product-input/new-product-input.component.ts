@@ -6,6 +6,10 @@ import { debounceTime } from 'rxjs/operator/debounceTime';
 import * as fromRoot from '../../reducers';
 import * as productActions from '../../actions/product';
 import { AnimateDirective } from '../../directives/animate.directive';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-new-product-input',
@@ -13,6 +17,8 @@ import { AnimateDirective } from '../../directives/animate.directive';
     <div class="container">
       <div class="card">
         <div class="card-header">
+          <button (click)="login()" *ngIf="!(user | async)?.uid">Anonymous Login</button>
+          <button (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
           <app-color-input></app-color-input>
         </div>
         <div class="card-block">
@@ -67,6 +73,8 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
   @ViewChild('form') public form: NgForm;
 
   newProductForm: FormGroup;
+  products: FirebaseListObservable<any[]>;
+  user: Observable<firebase.User>;
   private alive = true;
   private success = new Subject<string>();
   successMessage: string;
@@ -81,11 +89,17 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private store: Store<fromRoot.State>
-              , fb: FormBuilder
+  constructor(fb: FormBuilder
               , private cardElement: ElementRef
-              , private animator: AnimateDirective) {
-
+              , private animator: AnimateDirective
+              , public afAuth: AngularFireAuth
+              , public af: AngularFireDatabase) {
+    this.products = af.list('/products', {
+      query: {
+        limitToLast: 50
+      }
+    });
+    this.user = this.afAuth.authState;
     const validatorsAll = Validators.compose([Validators.required, Validators.minLength(2)]);
     this.newProductForm = fb.group({
       'title': [null, validatorsAll],
@@ -95,10 +109,6 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.select(fromRoot.getToolbarColor)
-      .subscribe(color => {
-        this.animator.animateColor(this.cardElement.nativeElement.querySelector('.card'), color);
-      });
 
     this.success
       .subscribe((message) => {
@@ -117,8 +127,14 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
     this.alive = false;
   }
 
-  addProduct(title, price, description) {
-    this.store.dispatch(new productActions.AddProductAction({title, price, description}));
+  addProduct(newTitle, newPrice, newDescription) {
+    if (newTitle && newDescription) {
+      this.products.push({
+        title: newTitle,
+        description: newDescription,
+        price: newPrice
+      });
+    }
     this.newProductForm.reset();
     this.showSuccessMessage();
   }
@@ -132,5 +148,13 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
     this.animator
       .slideUpOut(this.cardElement.nativeElement.querySelector('.alert')
         , () => this.successMessage = '');
+  }
+
+  login() {
+    this.afAuth.auth.signInAnonymously();
+  }
+
+  logout() {
+    this.afAuth.auth.signOut();
   }
 }
