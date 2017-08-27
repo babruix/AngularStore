@@ -1,5 +1,5 @@
 export interface IProduct {
   text: string;
-  pinned?: boolean;
+  inCart?: boolean;
   removed?: boolean;
 }

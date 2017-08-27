@@ -20,10 +20,10 @@ import { AnimateDirective } from '../directives/animate.directive';
         <p class="product-text">{{ product.text }}</p>
       </div>
       <div class="product-footer text-muted">
-        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" ngbTooltip="{{ product.pinned === true ? 'Unpin?' : 'Pin?' }}">
+        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" ngbTooltip="{{ product.inCart === true ? 'Unpin?' : 'Pin?' }}">
           <input type="checkbox" class="custom-control-input"
-                 [checked]="product.pinned"
-                 (change)="updatePinned()">
+                 [checked]="product.inCart"
+                 (change)="updateInCart()">
           <span class="custom-control-indicator"></span>
         </label>
       </div>
@@ -81,7 +81,7 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  updatePinned() {
+  updateInCart() {
     this.animator.animationOut(this.productElement, () => {
       this.onPinnedToggle.emit(this.product);
     });

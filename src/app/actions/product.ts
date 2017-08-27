@@ -5,7 +5,7 @@ import { IProduct } from '../models/IProduct';
 export const ActionTypes = {
   ADD: type('[ProductsList] Add Product'),
   REMOVE: type('[ProductsList] Remove Product'),
-  TOGGLE_PINNED: type('[ProductsList] Toggle Pinned'),
+  TOGGLE_CART: type('[ProductsList] Add / Remove from Cart'),
 };
 
 export class AddProductAction implements Action {
@@ -22,11 +22,11 @@ export class RemoveAction implements Action {
   }
 }
 
-export class TogglePinnedAction implements Action {
-  type = ActionTypes.TOGGLE_PINNED;
+export class ToggleCartAction implements Action {
+  type = ActionTypes.TOGGLE_CART;
 
   constructor(public payload: IProduct) {
   }
 }
 
-export type Actions = AddProductAction | RemoveAction | TogglePinnedAction;
+export type Actions = AddProductAction | RemoveAction | ToggleCartAction;

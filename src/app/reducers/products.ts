@@ -20,9 +20,9 @@ export function reducer(state = productsListModel.defaults, action: Action): pro
       stateCopy.products.unshift(product);
       return merge({}, stateCopy);
 
-    case productActions.ActionTypes.TOGGLE_PINNED:
+    case productActions.ActionTypes.TOGGLE_CART:
       stateCopy.products = without(state.products, action.payload);
-      product.pinned = !product.pinned;
+      product.inCart = !product.inCart;
       stateCopy.products.unshift(product);
       return merge({}, stateCopy);
 
