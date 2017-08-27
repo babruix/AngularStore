@@ -31,8 +31,6 @@ import { AnimateDirective } from '../directives/animate.directive';
         </div>
 
         <div *ngIf="!product.inCart">
-          <div class="quantity-label">Qty</div>
-          <input class="form-control" type="number" min="1" [(ngModel)]="product.quantity">
           <button class="btn btn-success" type="button" (click)="addToCart(product)">Add to cart</button>
         </div>
        

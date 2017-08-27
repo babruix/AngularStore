@@ -3,5 +3,4 @@ export interface IProduct {
   price: string;
   description: string;
   inCart?: boolean;
-  quantity?: boolean;
 }
