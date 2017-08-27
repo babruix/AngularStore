@@ -1,34 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-admin-users',
-  template: `    
-    <div class="user" *ngFor="let user of users | async">
-      <div class="content">
-        {{user.email}}
-      </div>
-      <div class="active">
-        <span *ngIf="user.active">Active</span>
-        <span *ngIf="!user.active">Inactive</span>
-      </div>
+  template: `
+    <h2>Users</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Email</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users | async">
+          <td>{{user.email}}</td>
+          <td>
+            <span *ngIf="user.active">Active</span>
+            <span *ngIf="!user.active">Inactive</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   `,
   styles: [`    
-
-    .user {
-      margin-bottom: 5px;
-    }
-
-    .user .content {
-      display: inline-block;
-      width: calc(100% - 100px);
-    }
-
-    .user .active {
-      display: inline-block;
-      width: 80px;
-    }
+    
   `]
 })
 export class AdminUsersComponent implements OnInit {
