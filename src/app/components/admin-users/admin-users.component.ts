@@ -16,7 +16,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
         <tbody>
         <tr *ngFor="let user of users | async">
           <td>{{user.email}}</td>
-          <td>
+          <td >
             <span *ngIf="user.active">Active</span>
             <span *ngIf="!user.active">Inactive</span>
           </td>

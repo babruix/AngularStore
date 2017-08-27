@@ -31,6 +31,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
+import { NavComponent } from './components/nav/nav.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const appRoutes: Routes = [
   { path: '', component: ProductListComponent },
@@ -55,7 +57,9 @@ const appRoutes: Routes = [
     LoginComponent,
     AnimateDirective,
     AdminComponent,
-    AdminUsersComponent
+    AdminUsersComponent,
+    NavComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

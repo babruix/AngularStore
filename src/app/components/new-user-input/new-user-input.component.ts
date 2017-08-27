@@ -23,13 +23,11 @@ import { debounceTime } from 'rxjs/operator/debounceTime';
           {{ successMessage }}
         </ngb-alert>
       </div>
-      <app-admin-users></app-admin-users>
     </div>
+    <app-admin-users></app-admin-users>
   `,
   styles: [`    
-    button {
-      margin-top: 30px;
-    }
+
   `]
 })
 export class NewUserInputComponent implements OnInit {

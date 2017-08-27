@@ -6,11 +6,10 @@ import * as firebase from 'firebase/app';
 @Component({
   selector: 'app-login',
   template: `
-    LOGIN>
     <div class="login-frame">
       <button class="btn btn-default" (click)="login()" *ngIf="!(user | async)?.uid">
-        <img src="../../assets/google-icon.png">
-        Sign In with Google
+        <img class="google-icon" src="../../assets/google-icon.png">
+        Sign In
       </button>
       <img src="{{ (user | async)?.photoURL }}" class="user-photo">
       <button class="btn btn-default" (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
@@ -19,7 +18,10 @@ import * as firebase from 'firebase/app';
   styles: [
     `
       .user-photo {
-        max-width: 200px;
+        max-width: 83px;
+      }
+      .google-icon {
+        max-width: 50px;
       }
     `
   ]
