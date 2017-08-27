@@ -11,16 +11,16 @@ export function reducer(state = productsListModel.defaults, action: Action): pro
   switch (action.type) {
     case productActions.ActionTypes.ADD:
       return merge({}, state, {
-        products: [{title: trim(product.title)
-        , description: trim(product.description)
-        , price: trim(product.price)}
-        , ...state.products]
+        products: [{
+          title: trim(product.title)
+          , description: trim(product.description)
+          , price: trim(product.price)
+        }
+          , ...state.products]
       });
 
     case productActions.ActionTypes.REMOVE:
       stateCopy.products = without(state.products, action.payload);
-      product.removed = !product.removed;
-      stateCopy.products.unshift(product);
       return merge({}, stateCopy);
 
     case productActions.ActionTypes.TOGGLE_CART:

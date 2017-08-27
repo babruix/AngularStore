@@ -11,27 +11,31 @@ import { AnimateDirective } from '../directives/animate.directive';
     <div class="card" [ngStyle]="{'background-color': productColor$ |async}">
       <div class="card-header text-right">
         <button type="button" class="close btn btn-outline-secondary"
-                aria-label="Close" ngbTooltip="{{product.removed ? 'Revive' : 'Remove'}}"
-                (click)="removeproduct()">
-          <i class="fa {{product.removed ? 'fa-undo' : 'fa-trash-o'}}" aria-hidden="true"></i>
+                aria-label="Close" ngbTooltip="Remove"
+                (click)="removeProduct()">
+          <i class="fa fa-trash-o" aria-hidden="true"></i>
         </button>
+        
         <h2>{{product.title}}</h2>
         <p>{{product.price | currency:'USD':true}}</p>
       </div>
+      
       <div class="card-body text-center">
         <p class="card-text">{{product.description}}</p>
-        <div class="quantity-label">Qty</div><input mdInput type="number" min="1" [(ngModel)]="product.quantity">
-        <button type="button" (click)="addToCart(product)">
-          Add to Cart
-        </button>
       </div>
+      
       <div class="card-footer text-muted">
-        <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" ngbTooltip="{{ product.inCart === true ? 'Unpin?' : 'Pin?' }}">
-          <input type="checkbox" class="custom-control-input"
-                 [checked]="product.inCart"
-                 (change)="addToCart()">
-          <span class="custom-control-indicator"></span>
-        </label>
+        <div *ngIf="product.inCart">
+          <span>Added to Cart</span>
+          <button class="btn btn-default btn-sm" type="button" (click)="addToCart(product)">Remove from Cart</button>
+        </div>
+
+        <div *ngIf="!product.inCart">
+          <div class="quantity-label">Qty</div>
+          <input class="form-control" type="number" min="1" [(ngModel)]="product.quantity">
+          <button class="btn btn-success" type="button" (click)="addToCart(product)">Add to cart</button>
+        </div>
+       
       </div>
     </div>
   `,
@@ -47,16 +51,6 @@ import { AnimateDirective } from '../directives/animate.directive';
     .close {
       margin: -12px -21px 0 0;
       padding: 0 5px;
-    }
-
-    .fa-undo:hover {
-      animation: spin 1s infinite linear;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotateZ(-720deg)
-      }
     }
   `],
 })
@@ -81,7 +75,7 @@ export class ProductComponent implements OnInit {
     this.animator.animationIn(this.productElement);
   }
 
-  removeproduct() {
+  removeProduct() {
     this.animator.animationOut(this.productElement, () => {
       this.onRemove.emit(this.product);
     });

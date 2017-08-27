@@ -11,30 +11,20 @@ import * as productActions from '../actions/product';
   template: `
     <div class="container-fluid">
       <ngb-tabset>
-        <ngb-tab title="Cart" *ngIf="anyInCard$ | async">
+        <ngb-tab title="Products Catalog">
           <ng-template ngbTabContent>
             <div class="row product-columns">
-              <app-product *ngFor="let product of getinCart() | async"
+              <app-product *ngFor="let product of getAllProducts() | async"
                            [product]="product"
                            (onRemove)="removeProduct($event)"
                            (onInCartToggle)="toggleCart($event)"></app-product>
             </div>
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="Others" *ngIf="anyNotInCard$ | async">
+        <ngb-tab title="Your Cart" *ngIf="anyInCard$ | async">
           <ng-template ngbTabContent>
             <div class="row product-columns">
-              <app-product *ngFor="let product of getinCart(false) | async"
-                           [product]="product"
-                           (onRemove)="removeProduct($event)"
-                           (onInCartToggle)="toggleCart($event)"></app-product>
-            </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Removed" *ngIf="anyRemoved$ | async">
-          <ng-template ngbTabContent>
-            <div class="row product-columns">
-              <app-product *ngFor="let product of getRemoved() | async"
+              <app-product *ngFor="let product of getInCart() | async"
                            [product]="product"
                            (onRemove)="removeProduct($event)"
                            (onInCartToggle)="toggleCart($event)"></app-product>
@@ -50,20 +40,10 @@ import * as productActions from '../actions/product';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   public anyInCard$: Observable<boolean>;
-  public anyNotInCard$: Observable<boolean>;
-  public anyRemoved$: Observable<boolean>;
   private alive = true;
 
   constructor(private store: Store<fromRoot.State>) {
-    this.anyInCard$ = this.getinCart()
-      .takeWhile(() => this.alive)
-      .map((products) => products.length > 0);
-
-    this.anyNotInCard$ = this.getinCart(false)
-      .takeWhile(() => this.alive)
-      .map((products) => products.length > 0);
-
-    this.anyRemoved$ = this.getRemoved()
+    this.anyInCard$ = this.getInCart()
       .takeWhile(() => this.alive)
       .map((products) => products.length > 0);
 
@@ -80,14 +60,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.alive = false;
   }
 
-  getinCart(inCart = true) {
+  getAllProducts() {
+    return this.store.select(fromRoot.getProducts)
+      .takeWhile(() => this.alive);
+  }
+
+  getInCart() {
     return this.store.select(fromRoot.getProducts)
       .takeWhile(() => this.alive)
       .map((productArr) => productArr
-        .filter(product => inCart
-          ? product.inCart === true
-          : product.inCart !== true)
-        .filter(card => card.removed !== true));
+        .filter(product => product.inCart));
   }
 
   removeProduct(product) {
@@ -96,12 +78,5 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   toggleCart(product) {
     this.store.dispatch(new productActions.ToggleCartAction(product));
-  }
-
-  getRemoved() {
-    return this.store.select(fromRoot.getProducts)
-      .takeWhile(() => this.alive)
-      .map((productArr) => productArr
-        .filter(product => product.removed === true));
   }
 }

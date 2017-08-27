@@ -4,5 +4,4 @@ export interface IProduct {
   description: string;
   inCart?: boolean;
   quantity?: boolean;
-  removed?: boolean;
 }
