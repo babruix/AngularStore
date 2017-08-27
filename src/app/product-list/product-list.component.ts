@@ -21,7 +21,7 @@ import * as productActions from '../actions/product';
             </div>
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="Your Cart" *ngIf="anyInCard$ | async">
+        <ngb-tab title="Your Cart" *ngIf="anyInCart$ | async">
           <ng-template ngbTabContent>
             <div class="row product-columns">
               <app-product *ngFor="let product of getInCart() | async"
@@ -39,11 +39,11 @@ import * as productActions from '../actions/product';
   `]
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  public anyInCard$: Observable<boolean>;
+  public anyInCart$: Observable<boolean>;
   private alive = true;
 
   constructor(private store: Store<fromRoot.State>) {
-    this.anyInCard$ = this.getInCart()
+    this.anyInCart$ = this.getInCart()
       .takeWhile(() => this.alive)
       .map((products) => products.length > 0);
 

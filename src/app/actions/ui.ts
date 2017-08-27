@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { type } from '../../utils/util';
 
 export const ActionTypes = {
-  SET_TOOLBAR_COLOR: type('[UI] Add Card'),
+  SET_TOOLBAR_COLOR: type('[UI] COLOR'),
 };
 
 export class SetToolbarColorAction implements Action {
