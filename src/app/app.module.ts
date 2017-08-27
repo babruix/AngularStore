@@ -13,13 +13,19 @@ import { ColorInputComponent } from './color-input/color-input.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { NgxAniModule } from 'ngxani';
 import { AnimateDirective } from './directives/animate.directive';
+import { ProductComponent } from './product/product.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { NewProductInputComponent } from './new-product-input/new-product-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
+    ProductComponent,
+    ProductListComponent,
     CardListComponent,
     NewCardInputComponent,
+    NewProductInputComponent,
     ColorInputComponent,
     AnimateDirective
   ],

@@ -10,12 +10,12 @@ import { AnimateDirective } from './directives/animate.directive';
     <nav class="navbar fixed-top"
          [ngStyle]="{'background-color': toolbarColor$ |async}">
       <a class="navbar-brand" href="#">
-        <i class="fa fa-2x fa-id-card-o" aria-hidden="true"></i>
-        CPinner: Cards Pinner
+        <i class="fa fa-2x fa-id-product-o" aria-hidden="true"></i>
+        Angular Store: Toptal Academy evaluation project
       </a>
     </nav>
-    <app-new-card-input></app-new-card-input>
-    <app-card-list></app-card-list>
+    <app-new-product-input></app-new-product-input>
+    <app-product-list></app-product-list>
   `,
   styles: [],
 })
