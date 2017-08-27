@@ -27,12 +27,25 @@ import { ColorInputComponent } from './components/color-input/color-input.compon
 import { ProductComponent } from './components/product/product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 
 const appRoutes: Routes = [
   { path: '', component: ProductListComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
+  ,   children: [
+    {
+      path: '',
+      component: AdminComponent
+    },
+    {
+      path: 'users',
+      component: AdminUsersComponent
+    }
+  ]},
   { path: 'login', component: LoginComponent },
   { path: 'store', component: ProductListComponent },
+  { path: '', redirectTo: '/store', pathMatch: 'full' },
+  { path: '**', redirectTo: '/store', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -44,7 +57,8 @@ const appRoutes: Routes = [
     ColorInputComponent,
     LoginComponent,
     AnimateDirective,
-    AdminComponent
+    AdminComponent,
+    AdminUsersComponent
   ],
   imports: [
     BrowserModule,

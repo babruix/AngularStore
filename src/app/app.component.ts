@@ -14,8 +14,9 @@ import { AnimateDirective } from './directives/animate.directive';
         Angular Store: Toptal Academy evaluation project
       </a>
       <ul class="nav navbar-nav" routerLinkActive="active">
-        <li class="nav-item"><a class="nav-link" routerLink="login">Home</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="admin">Admin</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="login">Login</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="admin">Add Product</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="admin/users">Manage Users</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="store">Store</a></li>
       </ul>
     </nav>
