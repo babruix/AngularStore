@@ -35,6 +35,8 @@ import * as firebase from 'firebase/app';
                  ngbTooltip="Fill in Description">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
+        <button class="btn btn-primary" 
+                (click)="addProduct(newProductForm.controls['title'].value, newProductForm.controls['price'].value, newProductForm.controls['description'].value)">Add Product</button>
         <ngb-alert *ngIf="successMessage" type="success" 
                    (close)="hideMessage()">
           {{ successMessage }}
@@ -57,6 +59,9 @@ import * as firebase from 'firebase/app';
         float: left;
         padding: 0 7px;
         margin-top: -28px;
+      }
+      .block {
+        display: block;
       }
       .alert {
         opacity: 0;
@@ -144,13 +149,5 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
     this.animator
       .slideUpOut(this.cardElement.nativeElement.querySelector('.alert')
         , () => this.successMessage = '');
-  }
-
-  login() {
-    this.afAuth.auth.signInAnonymously();
-  }
-
-  logout() {
-    this.afAuth.auth.signOut();
   }
 }

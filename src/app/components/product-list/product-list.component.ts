@@ -34,9 +34,8 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
   `]
 })
-export class ProductListComponent implements OnInit, OnDestroy {
+export class ProductListComponent implements OnInit {
   products: FirebaseListObservable<any>;
-  private alive = true;
 
   constructor(public db: AngularFireDatabase
     ) {
@@ -44,10 +43,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-  }
-
-  ngOnDestroy(): void {
-    this.alive = false;
   }
 
   getInCart() {

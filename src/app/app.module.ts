@@ -22,26 +22,22 @@ import { AuthGuard } from './services/auth-guard.service';
 // components
 import { AppComponent } from './app.component';
 import { LoginComponent } from 'app/components/login/login.component';
-import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
-import { ColorInputComponent } from './components/color-input/color-input.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { ColorInputComponent } from './components/color-input/color-input.component';
+
+// admin
 import { AdminComponent } from './components/admin/admin.component';
+import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
 
 const appRoutes: Routes = [
   { path: '', component: ProductListComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
-  ,   children: [
-    {
-      path: '',
-      component: AdminComponent
-    },
-    {
-      path: 'users',
-      component: AdminUsersComponent
-    }
-  ]},
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
+  { path: 'add-product', component: NewProductInputComponent },
+  { path: 'add-user', component: NewUserInputComponent },
+  { path: 'users', component: AdminUsersComponent },
   { path: 'login', component: LoginComponent },
   { path: 'store', component: ProductListComponent },
   { path: '', redirectTo: '/store', pathMatch: 'full' },
@@ -54,6 +50,7 @@ const appRoutes: Routes = [
     ProductComponent,
     ProductListComponent,
     NewProductInputComponent,
+    NewUserInputComponent,
     ColorInputComponent,
     LoginComponent,
     AnimateDirective,

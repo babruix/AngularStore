@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 @Component({
-  selector: 'admin-users',
-  template: `
-    <div class="button-container">
-      <button md-raised-button routerLink="/admin/add-user">Add a User</button>
-    </div>
+  selector: 'app-admin-users',
+  template: `    
     <div class="user" *ngFor="let user of users | async">
       <div class="content">
         {{user.email}}
@@ -17,14 +14,7 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
       </div>
     </div>
   `,
-  styles: [`
-    .button-container {
-      text-align: right;
-    }
-
-    .button-container button {
-      margin: 30px;
-    }
+  styles: [`    
 
     .user {
       margin-bottom: 5px;
