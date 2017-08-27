@@ -11,7 +11,10 @@ export function reducer(state = productsListModel.defaults, action: Action): pro
   switch (action.type) {
     case productActions.ActionTypes.ADD:
       return merge({}, state, {
-        products: [{text: trim(product)}, ...state.products]
+        products: [{title: trim(product.title)
+        , description: trim(product.description)
+        , price: trim(product.price)}
+        , ...state.products]
       });
 
     case productActions.ActionTypes.REMOVE:

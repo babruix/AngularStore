@@ -1,5 +1,8 @@
 export interface IProduct {
-  text: string;
+  title: string;
+  price: string;
+  description: string;
   inCart?: boolean;
+  quantity?: boolean;
   removed?: boolean;
 }

@@ -15,15 +15,21 @@ import { AnimateDirective } from '../directives/animate.directive';
                 (click)="removeproduct()">
           <i class="fa {{product.removed ? 'fa-undo' : 'fa-trash-o'}}" aria-hidden="true"></i>
         </button>
+        <h2>{{product.title}}</h2>
+        <p>{{product.price | currency:'USD':true}}</p>
       </div>
       <div class="card-body text-center">
-        <p class="card-text">{{ product.text }}</p>
+        <p class="card-text">{{product.description}}</p>
+        <div class="quantity-label">Qty</div><input mdInput type="number" min="1" [(ngModel)]="product.quantity">
+        <button type="button" (click)="addToCart(product)">
+          Add to Cart
+        </button>
       </div>
       <div class="card-footer text-muted">
         <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" ngbTooltip="{{ product.inCart === true ? 'Unpin?' : 'Pin?' }}">
           <input type="checkbox" class="custom-control-input"
                  [checked]="product.inCart"
-                 (change)="updateInCart()">
+                 (change)="addToCart()">
           <span class="custom-control-indicator"></span>
         </label>
       </div>
@@ -81,7 +87,7 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  updateInCart() {
+  addToCart() {
     this.animator.animationOut(this.productElement, () => {
       this.onInCartToggle.emit(this.product);
     });

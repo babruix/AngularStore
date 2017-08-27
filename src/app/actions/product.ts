@@ -11,7 +11,7 @@ export const ActionTypes = {
 export class AddProductAction implements Action {
   type = ActionTypes.ADD;
 
-  constructor(public payload: string) {
+  constructor(public payload: IProduct) {
   }
 }
 
