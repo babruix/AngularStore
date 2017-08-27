@@ -8,18 +8,18 @@ import { AnimateDirective } from '../directives/animate.directive';
 @Component({
   selector: 'app-product',
   template: `
-    <div class="product" [ngStyle]="{'background-color': productColor$ |async}">
-      <div class="product-header text-right">
+    <div class="card" [ngStyle]="{'background-color': productColor$ |async}">
+      <div class="card-header text-right">
         <button type="button" class="close btn btn-outline-secondary"
                 aria-label="Close" ngbTooltip="{{product.removed ? 'Revive' : 'Remove'}}"
                 (click)="removeproduct()">
           <i class="fa {{product.removed ? 'fa-undo' : 'fa-trash-o'}}" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="product-body text-center">
-        <p class="product-text">{{ product.text }}</p>
+      <div class="card-body text-center">
+        <p class="card-text">{{ product.text }}</p>
       </div>
-      <div class="product-footer text-muted">
+      <div class="card-footer text-muted">
         <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" ngbTooltip="{{ product.inCart === true ? 'Unpin?' : 'Pin?' }}">
           <input type="checkbox" class="custom-control-input"
                  [checked]="product.inCart"
@@ -30,7 +30,7 @@ import { AnimateDirective } from '../directives/animate.directive';
     </div>
   `,
   styles: [`
-    .product {
+    .card {
       margin-top: 1rem;
       margin-bottom: 1rem;
       position: relative;
@@ -57,7 +57,7 @@ import { AnimateDirective } from '../directives/animate.directive';
 export class ProductComponent implements OnInit {
   @Input() product: IProduct;
   @Output() 'onRemove' = new EventEmitter<IProduct>();
-  @Output() 'onPinnedToggle' = new EventEmitter<IProduct>();
+  @Output() onInCartToggle = new EventEmitter<IProduct>();
   @HostBinding('class') classes = 'col-3';
   public productColor$: Observable<string>;
 
@@ -70,7 +70,7 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     this.store.select(fromRoot.getToolbarColor)
       .subscribe(color => {
-        this.animator.animateColor(this.productElement.nativeElement.querySelector('.product'), color);
+        this.animator.animateColor(this.productElement.nativeElement.querySelector('.card'), color);
       });
     this.animator.animationIn(this.productElement);
   }
@@ -83,7 +83,7 @@ export class ProductComponent implements OnInit {
 
   updateInCart() {
     this.animator.animationOut(this.productElement, () => {
-      this.onPinnedToggle.emit(this.product);
+      this.onInCartToggle.emit(this.product);
     });
   }
 }

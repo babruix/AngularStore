@@ -17,7 +17,7 @@ import * as productActions from '../actions/product';
               <app-product *ngFor="let product of getinCart() | async"
                            [product]="product"
                            (onRemove)="removeProduct($event)"
-                           (onPinnedToggle)="toggleCart($event)"></app-product>
+                           (onInCartToggle)="toggleCart($event)"></app-product>
             </div>
           </ng-template>
         </ngb-tab>
@@ -27,7 +27,7 @@ import * as productActions from '../actions/product';
               <app-product *ngFor="let product of getinCart(false) | async"
                            [product]="product"
                            (onRemove)="removeProduct($event)"
-                           (onPinnedToggle)="toggleCart($event)"></app-product>
+                           (onInCartToggle)="toggleCart($event)"></app-product>
             </div>
           </ng-template>
         </ngb-tab>
@@ -37,7 +37,7 @@ import * as productActions from '../actions/product';
               <app-product *ngFor="let product of getRemoved() | async"
                            [product]="product"
                            (onRemove)="removeProduct($event)"
-                           (onPinnedToggle)="toggleCart($event)"></app-product>
+                           (onInCartToggle)="toggleCart($event)"></app-product>
             </div>
           </ng-template>
         </ngb-tab>
