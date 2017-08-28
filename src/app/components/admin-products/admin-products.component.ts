@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-products',
@@ -56,7 +57,8 @@ export class AdminProductsComponent implements OnInit {
 
   constructor(public db: AngularFireDatabase
   , private productElement: ElementRef
-  , private animator: AnimateDirective) {
+  , private animator: AnimateDirective
+  , public router: Router) {
     this.products = db.list('/products');
   }
 
@@ -70,7 +72,6 @@ export class AdminProductsComponent implements OnInit {
   }
 
   editProduct(product) {
-    this.db.object('/products/' + product.$key)
-      .update({ email: product.email, active: !product.active });
+    this.router.navigateByUrl('admin/edit-product/' + product.$key);
   }
 }

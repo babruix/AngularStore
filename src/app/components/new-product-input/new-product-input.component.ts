@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operator/debounceTime';
 import { AnimateDirective } from '../../directives/animate.directive';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-new-product-input',
@@ -19,18 +20,22 @@ import * as firebase from 'firebase/app';
         </div>
         <div class="card-block">
           <input placeholder="Title" class="form-control" name="title"
+                 [(ngModel)]="title"
                  [formControl]="newProductForm.controls['title']"
                  ngbTooltip="Fill in Title">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
         <div class="card-block">
           <input placeholder="Price" class="form-control" name="price"
+                 type="number" step="0.01"
+                 [(ngModel)]="price"
                  [formControl]="newProductForm.controls['price']"
                  ngbTooltip="Fill in Price">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
         <div class="card-block">
           <input placeholder="Product Description..." class="form-control" name="description"
+                 [(ngModel)]="description"
                  [formControl]="newProductForm.controls['description']"
                  ngbTooltip="Fill in Description">
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -83,6 +88,13 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
   private success = new Subject<string>();
   successMessage: string;
 
+  isEditing: boolean;
+  currentProduct: FirebaseObjectObservable<any>;
+  productKey: string;
+  title: string;
+  description: string;
+  price: string;
+
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     const enterKey = event.keyCode ? event.keyCode : event.which;
@@ -97,7 +109,8 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
               , private cardElement: ElementRef
               , private animator: AnimateDirective
               , public afAuth: AngularFireAuth
-              , public af: AngularFireDatabase) {
+              , public af: AngularFireDatabase
+              , public route: ActivatedRoute) {
     this.products = af.list('/products', {
       query: {
         limitToLast: 50
@@ -120,19 +133,48 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
         setTimeout(() => this.animator
           .slideDownIn(this.cardElement.nativeElement.querySelector('.alert')), 1);
       });
-
     debounceTime.call(this.success, 5000)
       .subscribe(() => this.hideMessage());
-
     this.animator.animationIn(this.cardElement);
+
+    this.route.params.subscribe((params: Params) => {
+      if (params && params.key) {
+        this.isEditing = true;
+        this.productKey = params.key;
+        this.currentProduct = this.af
+          .object('/products/' + params.key);
+
+        this.currentProduct.subscribe(p => {
+          this.title = p.title;
+          this.description = p.description;
+          this.price = p.price;
+        });
+      } else {
+        this.title = null;
+        this.description = null;
+        this.price = null;
+      }
+    });
   }
 
   ngOnDestroy() {
     this.alive = false;
   }
 
-  addProduct(newTitle, newPrice, newDescription) {
-    if (newTitle && newDescription) {
+  addProduct(newTitle: string, newPrice: string, newDescription: string) {
+    if (!newTitle || !newPrice || !newDescription) {
+      return;
+    }
+
+    if (this.isEditing && this.productKey) {
+      this.currentProduct = this.af.object('/products/' + this.productKey);
+
+      this.currentProduct.update({
+        title: newTitle,
+        description: newDescription,
+        price: newPrice,
+      });
+    } else {
       this.products.push({
         title: newTitle,
         description: newDescription,
@@ -145,7 +187,7 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
 
   public showSuccessMessage() {
     this.success
-      .next(`New product was successfully created.`);
+      .next(`New product was successfully saved.`);
   }
 
   hideMessage() {
