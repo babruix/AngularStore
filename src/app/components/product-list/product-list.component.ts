@@ -6,28 +6,12 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
   selector: 'app-product-list',
   template: `
     <div class="container-fluid">
-      <ngb-tabset>
-        <ngb-tab title="Products Catalog">
-          <ng-template ngbTabContent>
-            <div class="row product-columns">
-              <app-product *ngFor="let product of products | async"
-                           [product]="product"
-                           (onRemove)="removeProduct($event)"
-                           (onInCartToggle)="toggleCart($event)"></app-product>
-            </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Your Cart">
-          <ng-template ngbTabContent>
-            <div class="row product-columns">
-              <app-product *ngFor="let product of getInCart() | async"
-                           [product]="product"
-                           (onRemove)="removeProduct($event)"
-                           (onInCartToggle)="toggleCart($event)"></app-product>
-            </div>
-          </ng-template>
-        </ngb-tab>
-      </ngb-tabset>
+      <div class="row product-columns">
+        <app-product *ngFor="let product of products | async"
+                     [product]="product"
+                     (onRemove)="removeProduct($event)"
+                     (onInCartToggle)="toggleCart($event)"></app-product>
+      </div>
     </div>
   `,
   styles: [`

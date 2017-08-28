@@ -3,8 +3,10 @@ import { IProduct } from '../../models/IProduct';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
 import { Store } from '@ngrx/store';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
+import { GlobalService } from '../../services/global.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -26,15 +28,12 @@ import { AnimateDirective } from '../../directives/animate.directive';
       </div>
       
       <div class="card-footer text-muted">
-        <div *ngIf="product.inCart">
-          <span>Added to Cart</span>
-          <button class="btn btn-default btn-sm" type="button" (click)="addToCart(product)">Remove from Cart</button>
+        <div *ngIf="globalCart[product.$key]">
+          <span>Already in Cart</span>
         </div>
-
-        <div *ngIf="!product.inCart">
+        <div *ngIf="!globalCart[product.$key]">
           <button class="btn btn-success" type="button" (click)="addToCart(product)">Add to cart</button>
         </div>
-       
       </div>
     </div>
   `,
@@ -46,17 +45,27 @@ import { AnimateDirective } from '../../directives/animate.directive';
   `],
 })
 export class ProductComponent implements OnInit {
-  @Input() product: IProduct;
+  @Input() product: any;
   @Output() 'onRemove' = new EventEmitter<IProduct>();
   @Output() onInCartToggle = new EventEmitter<IProduct>();
   @HostBinding('class') classes = 'col-3';
   public productColor$: Observable<string>;
+  globalCart: any;
+  private productContent: FirebaseListObservable<any[]>;
 
   constructor(public db: AngularFireDatabase
               , private store: Store<fromRoot.State>
               , private productElement: ElementRef
-              , private animator: AnimateDirective) {
+              , private animator: AnimateDirective
+              , public globalService: GlobalService
+              , public route: ActivatedRoute) {
     this.productColor$ = this.store.select(fromRoot.getToolbarColor);
+
+    globalService.cart.subscribe((cart) => {
+      this.globalCart = cart;
+      window.localStorage.setItem('cart', JSON.stringify(this.globalCart));
+      console.log('cart', cart);
+    });
   }
 
   ngOnInit() {
@@ -66,6 +75,15 @@ export class ProductComponent implements OnInit {
           .animateColor(this.productElement.nativeElement.querySelector('.card'), color);
       });
     this.animator.animationIn(this.productElement);
+
+    this.route.params.subscribe((params: Params) => {
+      this.productContent = this.db.list('/products', {
+        query: {
+          orderByChild: 'url',
+          equalTo: params.url
+        }
+      });
+    });
   }
 
   removeProduct(product) {
@@ -74,9 +92,10 @@ export class ProductComponent implements OnInit {
       });
   }
 
-  addToCart() {
-    this.animator.animationOut(this.productElement, () => {
-      this.onInCartToggle.emit(this.product);
-    });
+  addToCart(item) {
+    this.globalCart[item.$key] = item;
+    this.globalCart[item.$key]['key'] = item.$key;
+    this.globalCart[item.$key]['total'] = (item.quantity * item.price);
+    this.globalService.cart.next(this.globalCart);
   }
 }

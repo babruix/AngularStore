@@ -8,6 +8,23 @@ import { AnimateDirective } from './directives/animate.directive';
   selector: 'app-root',
   template: `
     <app-nav></app-nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-3 offset-6">
+          <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-link">
+              <input type="checkbox" [(ngModel)]="hideCart">Shopping Cart
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 offset-md-6">
+          <app-user-cart [ngbCollapse]="hideCart"></app-user-cart>
+        </div>
+      </div>
+    </div>
+
     <div class="container-fluid">
       <div class="row">
         <app-sidebar></app-sidebar>
@@ -16,7 +33,7 @@ import { AnimateDirective } from './directives/animate.directive';
         </main>
       </div>
     </div>
-    
+
   `,
   styles: [`
    
@@ -24,14 +41,17 @@ import { AnimateDirective } from './directives/animate.directive';
 })
 export class AppComponent implements OnInit {
   public toolbarColor$: Observable<string>;
+  hideCart: boolean;
 
   constructor(private store: Store<fromRoot.State>
     , private element: ElementRef
     , private animator: AnimateDirective) {
     this.toolbarColor$ = this.store.select(fromRoot.getToolbarColor);
+    this.hideCart = true;
   }
 
   ngOnInit() {
+
     this.store.select(fromRoot.getToolbarColor)
       .subscribe(color => {
         this.animator

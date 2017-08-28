@@ -34,6 +34,7 @@ import { AdminProductsComponent } from './components/admin-products/admin-produc
 import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
+import { UserCartComponent } from './components/user-cart/user-cart.component';
 
 const appRoutes: Routes = [
   {path: '', component: ProductListComponent},
@@ -66,7 +67,8 @@ const appRoutes: Routes = [
     AdminUsersComponent,
     AdminProductsComponent,
     NavComponent,
-    SidebarComponent
+    SidebarComponent,
+    UserCartComponent
   ],
   imports: [
     BrowserModule,
