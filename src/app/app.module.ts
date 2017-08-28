@@ -40,7 +40,7 @@ const appRoutes: Routes = [
   {
     path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
     , children: [
-      {path: 'add-product', component: AdminProductsComponent},
+      {path: 'products', component: AdminProductsComponent},
       {path: 'edit-product/:key', component: NewProductInputComponent},
       {path: 'users', component: AdminUsersComponent}
     ]

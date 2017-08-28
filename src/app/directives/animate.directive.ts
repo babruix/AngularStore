@@ -60,7 +60,7 @@ export class AnimateDirective {
     if (!dom) {
       return;
     }
-    this.ngxAni.fromTo(dom, 0.5, {
+    this.ngxAni.fromTo(dom, 0.3, {
       'margin-top': '0',
       'ease': this.ngxAni.ease.easeInOutCirc,
     }, {

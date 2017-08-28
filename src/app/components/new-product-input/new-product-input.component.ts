@@ -7,7 +7,7 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-product-input',
@@ -110,7 +110,8 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
               , private animator: AnimateDirective
               , public afAuth: AngularFireAuth
               , public af: AngularFireDatabase
-              , public route: ActivatedRoute) {
+              , public route: ActivatedRoute
+              , public router: Router) {
     this.products = af.list('/products', {
       query: {
         limitToLast: 50
@@ -133,7 +134,7 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
         setTimeout(() => this.animator
           .slideDownIn(this.cardElement.nativeElement.querySelector('.alert')), 1);
       });
-    debounceTime.call(this.success, 5000)
+    debounceTime.call(this.success, 3000)
       .subscribe(() => this.hideMessage());
     this.animator.animationIn(this.cardElement);
 
@@ -193,6 +194,11 @@ export class NewProductInputComponent implements OnInit, OnDestroy {
   hideMessage() {
     this.animator
       .slideUpOut(this.cardElement.nativeElement.querySelector('.alert')
-        , () => this.successMessage = '');
+        , () => {
+        this.successMessage = '';
+        if (this.isEditing) {
+          this.router.navigateByUrl('admin/products');
+        }
+      });
   }
 }
