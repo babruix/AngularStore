@@ -7,7 +7,12 @@ import { Router } from '@angular/router';
   selector: 'app-admin-users',
   template: `
     <h2>Users</h2>
-    <app-new-user-input></app-new-user-input>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-link">
+        <input type="checkbox" [(ngModel)]="showAddUserForm">Add User
+      </label>
+    </div>
+    <app-new-user-input [ngbCollapse]="showAddUserForm"></app-new-user-input>
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -57,6 +62,7 @@ import { Router } from '@angular/router';
 export class AdminUsersComponent implements OnInit {
 
   users: FirebaseListObservable<any>;
+  showAddUserForm: boolean;
 
   constructor(public db: AngularFireDatabase
               , private productElement: ElementRef
@@ -66,6 +72,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showAddUserForm = true;
   }
 
   removeUser(user) {

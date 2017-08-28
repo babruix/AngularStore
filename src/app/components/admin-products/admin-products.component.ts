@@ -7,7 +7,15 @@ import { Router } from '@angular/router';
   selector: 'app-admin-products',
   template: `
     <h2>Products</h2>
-    <app-new-product-input></app-new-product-input>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-link">
+        <input type="checkbox" [(ngModel)]="showAddProductForm">Add Product
+      </label>
+    </div>
+    <div [ngbCollapse]="showAddProductForm">
+      <app-new-product-input></app-new-product-input>
+    </div>
+    
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -54,6 +62,7 @@ import { Router } from '@angular/router';
 export class AdminProductsComponent implements OnInit {
 
   products: FirebaseListObservable<any>;
+  showAddProductForm: boolean;
 
   constructor(public db: AngularFireDatabase
   , private productElement: ElementRef
@@ -63,6 +72,7 @@ export class AdminProductsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showAddProductForm = true;
   }
 
   removeProduct(product) {
