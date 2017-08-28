@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin',
   template: `
-    <app-new-product-input></app-new-product-input>
+    <router-outlet></router-outlet>
   `,
   styles: []
 })
@@ -19,7 +19,6 @@ export class AdminComponent implements OnInit {
 
   constructor(public db: AngularFireDatabase, public afAuth: AngularFireAuth, public router: Router) {
 
-    // this.store = db.list('/products');
     this.user = afAuth.authState;
 
     this.user.subscribe(currentUser => {

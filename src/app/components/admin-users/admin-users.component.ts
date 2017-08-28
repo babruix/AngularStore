@@ -6,6 +6,7 @@ import { AnimateDirective } from '../../directives/animate.directive';
   selector: 'app-admin-users',
   template: `
     <h2>Users</h2>
+    <app-new-user-input></app-new-user-input>
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>

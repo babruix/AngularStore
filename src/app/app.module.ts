@@ -35,15 +35,18 @@ import { NavComponent } from './components/nav/nav.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const appRoutes: Routes = [
-  { path: '', component: ProductListComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
-  { path: 'add-product', component: NewProductInputComponent },
-  { path: 'add-user', component: NewUserInputComponent },
-  { path: 'users', component: AdminUsersComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'store', component: ProductListComponent },
-  { path: '', redirectTo: '/store', pathMatch: 'full' },
-  { path: '**', redirectTo: '/store', pathMatch: 'full' }
+  {path: '', component: ProductListComponent},
+  {
+    path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
+    , children: [
+      {path: 'add-product', component: NewProductInputComponent},
+      {path: 'users', component: AdminUsersComponent}
+    ]
+  },
+  {path: 'login', component: LoginComponent},
+  {path: 'store', component: ProductListComponent},
+  {path: '', redirectTo: '/store', pathMatch: 'full'},
+  {path: '**', redirectTo: '/store', pathMatch: 'full'}
 ];
 
 @NgModule({

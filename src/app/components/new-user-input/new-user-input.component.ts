@@ -1,5 +1,5 @@
-import { Component,ElementRef, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
 import { Subject } from 'rxjs/Subject';
@@ -24,7 +24,6 @@ import { debounceTime } from 'rxjs/operator/debounceTime';
         </ngb-alert>
       </div>
     </div>
-    <app-admin-users></app-admin-users>
   `,
   styles: [`    
 

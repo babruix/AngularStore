@@ -10,13 +10,10 @@ import { Component, OnInit } from '@angular/core';
           <a class="nav-link" routerLink="store">Store</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="add-product">Add Product</a>
+          <a class="nav-link" routerLink="admin/add-product">Manage Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="users">Users</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="add-user">Add User</a>
+          <a class="nav-link" routerLink="admin/users">Manage Users</a>
         </li>
       </ul>
     </nav>
