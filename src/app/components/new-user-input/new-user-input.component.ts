@@ -20,6 +20,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
         
         <div class="card-block">
           <input placeholder="Email" class="form-control" type="email" [(ngModel)]="email" required>
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>
           <label *ngIf="isEditing" for="active">Active?
             <input name="active" class="form-control" type="checkbox" [(ngModel)]="active" required>
           </label>
@@ -36,8 +37,20 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
       </div>
     </div>
   `,
-  styles: [`    
+  styles: [`
+    .card {
+      margin-bottom: 1rem;
+    }
 
+    .card-block input {
+      padding-left: 28px;
+    }
+
+    .card-block i {
+      float: left;
+      padding: 0 7px;
+      margin-top: -28px;
+    }
   `]
 })
 export class NewUserInputComponent implements OnInit {

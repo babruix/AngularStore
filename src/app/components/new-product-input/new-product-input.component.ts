@@ -67,10 +67,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
         padding: 0 7px;
         margin-top: -28px;
       }
-
-      .alert {
-        opacity: 0;
-      }
     `,
   ],
 })
