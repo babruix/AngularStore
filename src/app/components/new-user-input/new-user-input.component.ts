@@ -7,21 +7,21 @@ import { debounceTime } from 'rxjs/operator/debounceTime';
 
 @Component({
   selector: 'app-new-user-input',
-  template: `
+  template: `    
     <div class="container">
       <div class="card">
         <div class="card-header">
           <h1>Add a User</h1>
         </div>
+        <ngb-alert *ngIf="successMessage" type="success"
+                   (close)="hideMessage()">
+          {{ successMessage }}
+        </ngb-alert>
         <div class="card-block">
           <input placeholder="Email" class="form-control" type="email" [(ngModel)]="email" required>
         </div>
 
         <button class="btn btn-primary" (click)="addUser(email)">Add User</button>
-        <ngb-alert *ngIf="successMessage" type="success"
-                   (close)="hideMessage()">
-          {{ successMessage }}
-        </ngb-alert>
       </div>
     </div>
   `,
@@ -65,7 +65,7 @@ export class NewUserInputComponent implements OnInit {
           .slideDownIn(this.cardElement.nativeElement.querySelector('.alert')), 1);
       });
 
-    debounceTime.call(this.success, 5000)
+    debounceTime.call(this.success, 3000)
       .subscribe(() => this.hideMessage());
 
     this.animator.animationIn(this.cardElement);

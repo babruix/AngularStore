@@ -18,6 +18,10 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
           <h1>Add a Product</h1>
           <app-color-input></app-color-input>
         </div>
+        <ngb-alert *ngIf="successMessage" type="success"
+                   (close)="hideMessage()">
+          {{ successMessage }}
+        </ngb-alert>
         <div class="card-block">
           <input placeholder="Title" class="form-control" name="title"
                  [(ngModel)]="title"
@@ -45,10 +49,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
                 , newProductForm.controls['price'].value
                 , newProductForm.controls['description'].value)">
           Add Product</button>
-        <ngb-alert *ngIf="successMessage" type="success" 
-                   (close)="hideMessage()">
-          {{ successMessage }}
-        </ngb-alert>
       </div>
     </div>
   `,
@@ -56,7 +56,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
       `
       .card {
         margin-bottom: 1rem;
-        margin-top: -4em;
       }
 
       .card-block input {
@@ -68,9 +67,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
         padding: 0 7px;
         margin-top: -28px;
       }
-      .block {
-        display: block;
-      }
+
       .alert {
         opacity: 0;
       }
