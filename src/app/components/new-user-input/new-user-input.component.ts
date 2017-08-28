@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operator/debounceTime';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-user-input',
@@ -17,11 +17,22 @@ import { debounceTime } from 'rxjs/operator/debounceTime';
                    (close)="hideMessage()">
           {{ successMessage }}
         </ngb-alert>
+        
         <div class="card-block">
           <input placeholder="Email" class="form-control" type="email" [(ngModel)]="email" required>
+          <label *ngIf="isEditing" for="active">Active?
+            <input name="active" class="form-control" type="checkbox" [(ngModel)]="active" required>
+          </label>
+          <select [(ngModel)]="role" *ngIf="isEditing" class="form-control" name="role">
+            <option [(ngModel)]="role" value="admin">Admin</option>
+            <option [(ngModel)]="role" value="manager">Manager</option>
+            <option [(ngModel)]="role" value="user">User</option>
+          </select>
         </div>
 
-        <button class="btn btn-primary" (click)="addUser(email)">Add User</button>
+        <button class="btn btn-primary" (click)="addUser(email, active, role)">
+          {{ isEditing ? 'Edit': 'Add'}} 
+          User</button>
       </div>
     </div>
   `,
@@ -31,28 +42,53 @@ import { debounceTime } from 'rxjs/operator/debounceTime';
 })
 export class NewUserInputComponent implements OnInit {
 
-  email: string;
-
   private success = new Subject<string>();
   successMessage: string;
 
+  isEditing: boolean;
+  currentUser: FirebaseObjectObservable<any>;
+  userKey: string;
+  email: string;
+  active: string;
+  role: string;
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    const enterKey = event.keyCode ? event.keyCode : event.which;
+    if (enterKey === 13) {
+      this.addUser(this.email, this.active, this.role);
+    }
+  }
+
   constructor(public db: AngularFireDatabase
-  , fb: FormBuilder
-  , private cardElement: ElementRef
-  , private animator: AnimateDirective) {}
+              , private cardElement: ElementRef
+              , private animator: AnimateDirective
+              , public route: ActivatedRoute
+              , public router: Router) {}
 
-  addUser(email: string) {
-    if (email) {
+  addUser(email: string, active: string, role: string) {
+    if (!email) {
+      return;
+    }
 
+    if (this.isEditing && this.userKey) {
+      this.currentUser = this.db.object('/users/' + this.userKey);
+      this.currentUser.update({
+        email: email,
+        active: active || false,
+        role: role || 'user'
+      });
+    } else {
       this.db.object('/users/' + this.hashCode(email)).set({
         email: email,
-        active: false
+        active: false,
+        role: 'user'
       });
-
-      this.email = null;
-
-      this.showSuccessMessage();
     }
+
+    this.email = null;
+
+    this.showSuccessMessage();
   }
 
 
@@ -69,17 +105,42 @@ export class NewUserInputComponent implements OnInit {
       .subscribe(() => this.hideMessage());
 
     this.animator.animationIn(this.cardElement);
+
+    this.route.params.subscribe((params: Params) => {
+      if (params && params.key) {
+        this.isEditing = true;
+        this.userKey = params.key;
+        this.currentUser = this.db
+          .object('/users/' + params.key);
+
+        this.currentUser.subscribe(u => {
+          this.email = u.email;
+          this.active = u.active;
+          this.role = u.role;
+        });
+
+      } else {
+        this.email = null;
+        this.active = null;
+        this.role = null;
+      }
+    });
   }
 
   public showSuccessMessage() {
     this.success
-      .next(`New user was successfully created.`);
+      .next(`User was successfully saved.`);
   }
 
   hideMessage() {
     this.animator
       .slideUpOut(this.cardElement.nativeElement.querySelector('.alert')
-        , () => this.successMessage = '');
+        , () => {
+        this.successMessage = '';
+          if (this.isEditing) {
+            this.router.navigateByUrl('admin/users');
+          }
+      });
   }
 
   hashCode(input: string) {

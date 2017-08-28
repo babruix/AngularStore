@@ -42,7 +42,8 @@ const appRoutes: Routes = [
     , children: [
       {path: 'products', component: AdminProductsComponent},
       {path: 'edit-product/:key', component: NewProductInputComponent},
-      {path: 'users', component: AdminUsersComponent}
+      {path: 'users', component: AdminUsersComponent},
+      {path: 'edit-user/:key', component: NewUserInputComponent},
     ]
   },
   {path: 'login', component: LoginComponent},
