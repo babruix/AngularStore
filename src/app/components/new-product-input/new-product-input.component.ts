@@ -36,7 +36,10 @@ import * as firebase from 'firebase/app';
           <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </div>
         <button class="btn btn-primary" 
-                (click)="addProduct(newProductForm.controls['title'].value, newProductForm.controls['price'].value, newProductForm.controls['description'].value)">Add Product</button>
+                (click)="addProduct(newProductForm.controls['title'].value
+                , newProductForm.controls['price'].value
+                , newProductForm.controls['description'].value)">
+          Add Product</button>
         <ngb-alert *ngIf="successMessage" type="success" 
                    (close)="hideMessage()">
           {{ successMessage }}

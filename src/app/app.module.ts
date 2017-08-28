@@ -24,22 +24,23 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from 'app/components/login/login.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { ColorInputComponent } from './components/color-input/color-input.component';
+import { NavComponent } from './components/nav/nav.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 // admin
+import { ColorInputComponent } from './components/color-input/color-input.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
-import { NavComponent } from './components/nav/nav.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const appRoutes: Routes = [
   {path: '', component: ProductListComponent},
   {
     path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
     , children: [
-      {path: 'add-product', component: NewProductInputComponent},
+      {path: 'add-product', component: AdminProductsComponent},
       {path: 'users', component: AdminUsersComponent}
     ]
   },
@@ -61,6 +62,7 @@ const appRoutes: Routes = [
     AnimateDirective,
     AdminComponent,
     AdminUsersComponent,
+    AdminProductsComponent,
     NavComponent,
     SidebarComponent
   ],
