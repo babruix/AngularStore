@@ -28,7 +28,7 @@ import { Component, OnInit } from '@angular/core';
     }
     .sidebar {
       position: fixed;
-      top: 80px;
+      top: 50px;
       bottom: 0;
       left: 0;
       z-index: 1000;

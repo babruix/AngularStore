@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AnimateDirective } from '../../directives/animate.directive';
 
 @Component({
   selector: 'app-admin-users',
@@ -11,6 +12,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
         <tr>
           <th>Email</th>
           <th>Status</th>
+          <th>Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -19,6 +21,13 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
           <td >
             <span *ngIf="user.active">Active</span>
             <span *ngIf="!user.active">Inactive</span>
+          </td>
+          <td>
+            <button type="button" class="close btn btn-outline-secondary"
+                    aria-label="Close" ngbTooltip="Remove"
+                    (click)="removeUser(user)">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </button>
           </td>
         </tr>
         </tbody>
@@ -33,11 +42,18 @@ export class AdminUsersComponent implements OnInit {
 
   users: FirebaseListObservable<any>;
 
-  constructor(public db: AngularFireDatabase) {
+  constructor(public db: AngularFireDatabase
+  , private productElement: ElementRef
+  , private animator: AnimateDirective) {
     this.users = db.list('/users');
   }
 
   ngOnInit() {
   }
 
+  removeUser(user) {
+    this.animator.animationOut(this.productElement, () => {
+      this.db.list('/users/' + user.$key).remove();
+    });
+  }
 }

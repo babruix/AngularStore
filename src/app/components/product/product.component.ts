@@ -3,6 +3,7 @@ import { IProduct } from '../../models/IProduct';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
 import { Store } from '@ngrx/store';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
 
 @Component({
@@ -12,7 +13,7 @@ import { AnimateDirective } from '../../directives/animate.directive';
       <div class="card-header text-right">
         <button type="button" class="close btn btn-outline-secondary"
                 aria-label="Close" ngbTooltip="Remove"
-                (click)="removeProduct()">
+                (click)="removeProduct(product)">
           <i class="fa fa-trash-o" aria-hidden="true"></i>
         </button>
         
@@ -59,7 +60,8 @@ export class ProductComponent implements OnInit {
   @HostBinding('class') classes = 'col-3';
   public productColor$: Observable<string>;
 
-  constructor(private store: Store<fromRoot.State>
+  constructor(public db: AngularFireDatabase
+              , private store: Store<fromRoot.State>
               , private productElement: ElementRef
               , private animator: AnimateDirective) {
     this.productColor$ = this.store.select(fromRoot.getToolbarColor);
@@ -68,15 +70,17 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     this.store.select(fromRoot.getToolbarColor)
       .subscribe(color => {
-        this.animator.animateColor(this.productElement.nativeElement.querySelector('.card'), color);
+        this.animator
+          .animateColor(this.productElement.nativeElement.querySelector('.card'), color);
       });
     this.animator.animationIn(this.productElement);
   }
 
-  removeProduct() {
+  removeProduct(product) {
+    console.log(product);
     this.animator.animationOut(this.productElement, () => {
-      this.onRemove.emit(this.product);
-    });
+        this.db.list('/products/' + product.$key).remove();
+      });
   }
 
   addToCart() {

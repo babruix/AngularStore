@@ -75,7 +75,7 @@ const appRoutes: Routes = [
     NgxAniModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      // { enableTracing: true }
     ),
   ],
   providers: [GlobalService, AuthGuard, AnimateDirective],
