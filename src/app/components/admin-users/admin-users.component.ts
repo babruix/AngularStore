@@ -12,15 +12,25 @@ import { AnimateDirective } from '../../directives/animate.directive';
         <tr>
           <th>Email</th>
           <th>Status</th>
-          <th>Remove</th>
+          <th>Role</th>
+          <th></th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let user of users | async">
           <td>{{user.email}}</td>
-          <td >
+          <td>
             <span *ngIf="user.active">Active</span>
             <span *ngIf="!user.active">Inactive</span>
+          </td>
+          <td>{{user.role || 'No role'}}</td>
+          <td>
+            <button type="button" class="edit btn btn-outline-secondary"
+                    aria-label="Edit" ngbTooltip="Edit"
+                    (click)="editUser(user)">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
           </td>
           <td>
             <button type="button" class="close btn btn-outline-secondary"
@@ -34,8 +44,12 @@ import { AnimateDirective } from '../../directives/animate.directive';
       </table>
     </div>
   `,
-  styles: [`    
-    
+  styles: [`
+    .edit {
+      padding: 0 5px;
+      border: none;
+      font-size: 20px;
+    }
   `]
 })
 export class AdminUsersComponent implements OnInit {
@@ -55,5 +69,10 @@ export class AdminUsersComponent implements OnInit {
     this.animator.animationOut(this.productElement, () => {
       this.db.list('/users/' + user.$key).remove();
     });
+  }
+
+  editUser(user) {
+    this.db.object('/users/' + user.$key)
+      .update({ email: user.email, active: !user.active });
   }
 }

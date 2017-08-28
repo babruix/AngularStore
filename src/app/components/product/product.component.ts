@@ -3,7 +3,7 @@ import { IProduct } from '../../models/IProduct';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
 import { Store } from '@ngrx/store';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
 
 @Component({
@@ -39,14 +39,6 @@ import { AnimateDirective } from '../../directives/animate.directive';
     </div>
   `,
   styles: [`
-    .card {
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-      position: relative;
-      min-height: 5rem;
-      box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
-    }
-
     .close {
       margin: -12px -21px 0 0;
       padding: 0 5px;
@@ -77,7 +69,6 @@ export class ProductComponent implements OnInit {
   }
 
   removeProduct(product) {
-    console.log(product);
     this.animator.animationOut(this.productElement, () => {
         this.db.list('/products/' + product.$key).remove();
       });

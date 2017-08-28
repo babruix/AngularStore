@@ -6,3 +6,16 @@
 body {
   padding-top: 7rem;
 }
+
+.card {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  min-height: 5rem;
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  cursor: pointer;
+}
+
