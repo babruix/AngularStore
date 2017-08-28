@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,10 +13,10 @@ import { Component, OnInit } from '@angular/core';
           <a class="nav-link" routerLink="store">Store</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="admin/add-product">Manage Products</a>
+          <a class="nav-link" routerLink="admin/add-product" *ngIf="(user | async)?.uid">Manage Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="admin/users">Manage Users</a>
+          <a class="nav-link" routerLink="admin/users" *ngIf="(user | async)?.uid">Manage Users</a>
         </li>
       </ul>
     </nav>
@@ -37,8 +40,11 @@ import { Component, OnInit } from '@angular/core';
   `]
 })
 export class SidebarComponent implements OnInit {
+  user: Observable<firebase.User>;
 
-  constructor() { }
+  constructor(public afAuth: AngularFireAuth) {
+    this.user = afAuth.authState;
+  }
 
   ngOnInit() {
   }
