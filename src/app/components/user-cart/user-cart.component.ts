@@ -23,7 +23,7 @@ import { GlobalService } from '../../services/global.service';
             <div class="total">{{item.total | currency:'USD':true}}</div>
           </div>
           <div class="remove">
-            <button type="button" class="close btn btn-outline-secondary"
+            <button type="button" class="remove btn btn-secondary"
                     aria-label="Remove" ngbTooltip="Remove"
                     (click)="removeItem(item)">
               <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -31,13 +31,16 @@ import { GlobalService } from '../../services/global.service';
           </div>
         </div>
       </div>
-      <div class="card-footer text-primary" *ngIf="cartArray.length > 0">
+      <div class="card-footer text-primary text-right" *ngIf="cartArray.length > 0">
         Total: {{cardTotal | currency:'USD':true}}
       </div>
     </div>
   `,
   styles: [
     `
+      .card {
+        width: 500px;
+      }
       h3,
       .no-items {
         text-align: center;
@@ -52,11 +55,16 @@ import { GlobalService } from '../../services/global.service';
       .quantity,
       .total {
         display: inline-block;
-        width: 15%;
+        width: 13%;
       }
 
       .quantity input {
         width: 35px;
+      }
+      
+      .remove {
+        display: inline-block;
+        padding: 5px;
       }
     `
   ]
