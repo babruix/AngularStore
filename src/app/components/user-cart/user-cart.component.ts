@@ -33,6 +33,7 @@ import { GlobalService } from '../../services/global.service';
       </div>
       <div class="card-footer text-primary text-right" *ngIf="cartArray.length > 0">
         Total: {{cardTotal | currency:'USD':true}}
+        <button class="btn btn-primary" routerLink="/checkout/shipping">Checkout</button>
       </div>
     </div>
   `,

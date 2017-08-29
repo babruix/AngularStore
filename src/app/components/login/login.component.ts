@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { GlobalService } from '../../services/global.service';
+import { AngularFireDatabase } from 'angularfire2/database';
+
 
 @Component({
   selector: 'app-login',
@@ -30,8 +33,33 @@ export class LoginComponent implements OnInit {
 
   user: Observable<firebase.User>;
 
-  constructor(public afAuth: AngularFireAuth) {
+  constructor(public afAuth: AngularFireAuth
+    , public globalService: GlobalService
+    , public db: AngularFireDatabase) {
     this.user = afAuth.authState;
+
+    this.user.subscribe(currentUser => {
+      globalService.user.next(currentUser);
+
+      if (currentUser) {
+        this.db.object('/users/' + currentUser.uid).update({
+          uid: currentUser.uid,
+          email: currentUser.email
+        });
+
+        this.db.object('/users/' + currentUser.uid).subscribe((user) => {
+          if (user.cart) {
+            globalService.cart.next(user.cart);
+          }
+        });
+      }
+
+      if (!currentUser && window.localStorage.getItem('cart')) {
+        // For guest, set cart from local storage
+        const localStorageCart = JSON.parse(window.localStorage.getItem('cart'));
+        this.globalService.cart.next(localStorageCart);
+      }
+    });
   }
 
   login() {

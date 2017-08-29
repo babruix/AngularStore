@@ -5,13 +5,29 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-checkout-shipping',
   template: `
+    <h2>Checkout</h2>
     <div class="card container">
-      <h3>Shipping Info</h3>
-      <input placeholder="Name (first & last)" [(ngModel)]="order.shipping.name">
-        <input placeholder="Email" [(ngModel)]="order.shipping.email">
-        <input placeholder="Address" [(ngModel)]="order.shipping.address">
-        <input placeholder="City" [(ngModel)]="order.shipping.city">
-      <button (click)="goTo('checkout/billing')">Continue</button>
+      <div class="card-header">
+        <h3>Shipping address</h3>
+      </div>
+      <div class="card-body text-center">
+        <p class="card-text">
+          <input class="form-control" placeholder="Full Name (first & last)" [(ngModel)]="order.shipping.name">
+        </p>
+        <p class="card-text">
+          <input class="form-control" placeholder="Email" [(ngModel)]="order.shipping.email">
+        </p>
+        <p class="card-text">
+          <input class="form-control" placeholder="Address" [(ngModel)]="order.shipping.address">
+        </p>
+        <p class="card-text">
+          <input class="form-control" placeholder="City" [(ngModel)]="order.shipping.city">
+        </p>
+      </div>
+
+      <div class="card-footer text-muted">
+        <button class="btn btn-primary" (click)="goTo('checkout/billing')">Continue</button>
+      </div>
     </div>
   `,
   styles: [
@@ -19,6 +35,7 @@ import { Router } from '@angular/router';
       .container {
         margin: 30px auto;
         max-width: 600px;
+        padding: 0;
       }
 
       input,
