@@ -64,7 +64,6 @@ export class ProductComponent implements OnInit {
     globalService.cart.subscribe((cart) => {
       this.globalCart = cart;
       window.localStorage.setItem('cart', JSON.stringify(this.globalCart));
-      console.log('cart', cart);
     });
   }
 
@@ -95,6 +94,9 @@ export class ProductComponent implements OnInit {
   addToCart(item) {
     this.globalCart[item.$key] = item;
     this.globalCart[item.$key]['key'] = item.$key;
+    if (!item.quantity) {
+      item.quantity = 1;
+    }
     this.globalCart[item.$key]['total'] = (item.quantity * item.price);
     this.globalService.cart.next(this.globalCart);
   }
