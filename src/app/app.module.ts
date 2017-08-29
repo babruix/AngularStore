@@ -35,16 +35,25 @@ import { NewProductInputComponent } from './components/new-product-input/new-pro
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
 import { UserCartComponent } from './components/user-cart/user-cart.component';
+import { CheckoutShippingComponent } from './components/checkout-shipping/checkout-shipping.component';
 
 const appRoutes: Routes = [
   {path: '', component: ProductListComponent},
-  {
-    path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
     , children: [
       {path: 'products', component: AdminProductsComponent},
       {path: 'edit-product/:key', component: NewProductInputComponent},
       {path: 'users', component: AdminUsersComponent},
       {path: 'edit-user/:key', component: NewUserInputComponent},
+    ]
+  },
+  {path: 'checkout'
+    , children: [
+      {path: '',
+        children: [
+          {path: 'shipping', component: CheckoutShippingComponent},
+        ]
+      }
     ]
   },
   {path: 'login', component: LoginComponent},
@@ -68,7 +77,8 @@ const appRoutes: Routes = [
     AdminProductsComponent,
     NavComponent,
     SidebarComponent,
-    UserCartComponent
+    UserCartComponent,
+    CheckoutShippingComponent,
   ],
   imports: [
     BrowserModule,

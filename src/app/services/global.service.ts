@@ -5,4 +5,5 @@ import { BehaviorSubject } from 'rxjs/Rx';
 export class GlobalService {
   public user = new BehaviorSubject(null);
   public cart = new BehaviorSubject({});
+  public order = new BehaviorSubject({});
 }
