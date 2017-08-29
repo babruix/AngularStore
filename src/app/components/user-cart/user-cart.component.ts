@@ -22,6 +22,13 @@ import { GlobalService } from '../../services/global.service';
           <div class="total">
             <div class="total">{{item.total | currency:'USD':true}}</div>
           </div>
+          <div class="remove">
+            <button type="button" class="close btn btn-outline-secondary"
+                    aria-label="Remove" ngbTooltip="Remove"
+                    (click)="removeItem(item)">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
       </div>
       <div class="card-footer text-primary" *ngIf="cartArray.length > 0">
@@ -67,8 +74,14 @@ export class UserCartComponent implements OnInit {
       this.globalCart = cart;
       this.cartArray = [];
       this.cartArray = (<any>Object).values(this.globalCart);
+      this.cardTotal = this.cartArray
+        .reduce((a, b) => a + b.total, 0);
       window.localStorage.setItem('cart', JSON.stringify(this.globalCart));
     });
+  }
+
+  ngOnInit() {
+
   }
 
   updateCart(item) {
@@ -79,9 +92,10 @@ export class UserCartComponent implements OnInit {
 
     this.globalCart[item.key]['total'] = item.quantity * item.price;
     this.globalService.cart.next(this.globalCart);
-    this.cardTotal = this.cartArray
-      .reduce((a, b) => a + b.total, 0);
   }
-  ngOnInit() {
+
+  removeItem(item) {
+    delete this.globalCart[item.key];
+    this.globalService.cart.next(this.globalCart);
   }
 }
