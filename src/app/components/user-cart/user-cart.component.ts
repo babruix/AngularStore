@@ -10,7 +10,7 @@ import { GlobalService } from '../../services/global.service';
         <div class="no-items" *ngIf="cartArray.length === 0">You do not have any products in the cart.</div>
       </div>
       <div class="card-body text-left">
-        <div *ngFor="let item of cartArray" class="card-text">
+        <div *ngFor="let item of cartArray" class="card-text container">
           <div class="item">{{item.title}}</div>
           <div class="price">{{item.price | currency:'USD':true}}</div>
           <div class="quantity">

@@ -5,7 +5,11 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-checkout-billing',
   template: `
+    <div class="container">
     <h2>Checkout</h2>
+      <a class="btn btn-link btn-xs nav-link" routerLink="checkout/shipping">
+        <i class="fa fa-arrow-circle-o-left" style="font-size:2.5rem;"></i>Back</a>
+    </div>
     <div class="card container">
       <div class="card-header">
         <h3>Billing address</h3>
@@ -25,8 +29,21 @@ import { Router } from '@angular/router';
     </div>
   `,
   styles: [
-    `
+      `
+      .container {
+        margin: 30px auto;
+        max-width: 600px;
+        padding: 0;
+      }
 
+      input,
+      select {
+        display: block;
+      }
+
+      select {
+        margin: 20px auto 21px auto;
+      }
     `
   ]
 })

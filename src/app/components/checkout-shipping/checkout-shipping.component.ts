@@ -5,7 +5,11 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-checkout-shipping',
   template: `
-    <h2>Checkout</h2>
+    <div class="container">
+      <h2>Checkout</h2>
+      <a class="btn btn-link btn-xs nav-link" routerLink="checkout/shipping">
+        <i class="fa fa-arrow-circle-o-left" style="font-size:2.5rem;"></i>Back to store</a>
+    </div>
     <div class="card container">
       <div class="card-header">
         <h3>Shipping address</h3>
@@ -31,7 +35,7 @@ import { Router } from '@angular/router';
     </div>
   `,
   styles: [
-    `
+      `
       .container {
         margin: 30px auto;
         max-width: 600px;
@@ -66,12 +70,12 @@ export class CheckoutShippingComponent implements OnInit {
 
   goTo(url: string) {
     if (this.order.shipping.name &&
-        this.order.shipping.email &&
-        this.order.shipping.address &&
-        this.order.shipping.city) {
-          this.globalService.order.next(this.order);
-          this.router.navigateByUrl(url);
-      }
+      this.order.shipping.email &&
+      this.order.shipping.address &&
+      this.order.shipping.city) {
+      this.globalService.order.next(this.order);
+      this.router.navigateByUrl(url);
+    }
   }
 
   ngOnInit() {
