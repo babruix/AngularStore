@@ -53,6 +53,7 @@ const appRoutes: Routes = [
       {path: '',
         children: [
           {path: 'shipping', component: CheckoutShippingComponent},
+          {path: 'billing', component: CheckoutBillingComponent},
         ]
       }
     ]
