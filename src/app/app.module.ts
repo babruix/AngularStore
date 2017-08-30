@@ -36,6 +36,7 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
 import { UserCartComponent } from './components/user-cart/user-cart.component';
 import { CheckoutShippingComponent } from './components/checkout-shipping/checkout-shipping.component';
+import { CheckoutBillingComponent } from './components/checkout-billing/checkout-billing.component';
 
 const appRoutes: Routes = [
   {path: '', component: ProductListComponent},
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
     SidebarComponent,
     UserCartComponent,
     CheckoutShippingComponent,
+    CheckoutBillingComponent,
   ],
   imports: [
     BrowserModule,
