@@ -6,10 +6,10 @@ Use Angular 2+ to build an e-commerce site with:
     - [ ] User can register at any time to the store 
       >  (registration/auth mocking is permitted)
     - [ ] Recaptcha on user registration
-- [ ] Product catalog
-- [ ] Authentication
+- [x] Product catalog
+- [x] Authentication
   >  (registration/auth mocking is permitted)
-  - [ ] Recaptcha on user authentication
+  - [x] Recaptcha on user authentication
 - [ ] Roles
   - [ ] Three types of roles: admin, manager, user
       - [ ] Admin

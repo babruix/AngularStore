@@ -10,7 +10,10 @@ import { AngularFireDatabase } from 'angularfire2/database';
   selector: 'app-login',
   template: `
     <div class="login-frame">
-      <button class="btn btn-default" (click)="login()" *ngIf="!(user | async)?.uid">
+      <re-captcha *ngIf="!captchaResolved && !(user | async)?.uid" 
+                  (resolved)="captchaResolved = true" 
+                  siteKey="6LeZ5i4UAAAAAKQwZjqandEEMDUqP3CdXtHwsrXN"></re-captcha>
+      <button (click)="login()" class="btn btn-default" *ngIf="captchaResolved && !(user | async)?.uid">
         <img class="google-icon" src="../../assets/google-icon.png">
         Sign In
       </button>
@@ -24,7 +27,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
         max-width: 83px;
       }
       .google-icon {
-        max-width: 50px;
+        max-width: 30px;
       }
     `
   ]
@@ -32,11 +35,14 @@ import { AngularFireDatabase } from 'angularfire2/database';
 export class LoginComponent implements OnInit {
 
   user: Observable<firebase.User>;
+  public captchaResolved: boolean;
 
   constructor(public afAuth: AngularFireAuth
     , public globalService: GlobalService
     , public db: AngularFireDatabase) {
+
     this.user = afAuth.authState;
+    this.captchaResolved = false;
 
     this.user.subscribe(currentUser => {
       globalService.user.next(currentUser);

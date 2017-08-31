@@ -29,6 +29,7 @@
     "core-js": "^2.4.1",
     "firebase": "^4.3.0",
     "font-awesome": "^4.7.0",
+    "ng-recaptcha": "^3.0.0",
     "ngrx": "^2.0.1",
     "ngrx-store-freeze": "^0.1.9",
     "ngrx-store-localstorage": "^0.2.0",
