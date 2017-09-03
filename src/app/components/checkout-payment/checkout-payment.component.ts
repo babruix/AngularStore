@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-checkout-payment',
   template: `
-    <p>
-      checkout-payment Works!
-    </p>
+    <button class="btn btn-primary">
+      Pay now</button>
   `,
   styles: []
 })
