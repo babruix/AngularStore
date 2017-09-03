@@ -27,17 +27,18 @@ import { ProductComponent } from './components/product/product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { NavComponent } from './components/nav/nav.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { UserCartComponent } from './components/user-cart/user-cart.component';
+import { CheckoutShippingComponent } from './components/checkout-shipping/checkout-shipping.component';
+import { CheckoutBillingComponent } from './components/checkout-billing/checkout-billing.component';
 
 // admin
+import { CheckoutPaymentComponent } from './components/checkout-payment/checkout-payment.component';
 import { ColorInputComponent } from './components/color-input/color-input.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
-import { UserCartComponent } from './components/user-cart/user-cart.component';
-import { CheckoutShippingComponent } from './components/checkout-shipping/checkout-shipping.component';
-import { CheckoutBillingComponent } from './components/checkout-billing/checkout-billing.component';
 
 const appRoutes: Routes = [
   {path: '', component: ProductListComponent},
@@ -83,6 +84,7 @@ const appRoutes: Routes = [
     UserCartComponent,
     CheckoutShippingComponent,
     CheckoutBillingComponent,
+    CheckoutPaymentComponent,
   ],
   imports: [
     BrowserModule,
