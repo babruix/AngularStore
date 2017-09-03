@@ -17,7 +17,6 @@ import { Router } from '@angular/router';
       <div class="card-body text-center">
         <p class="card-text">
           <input class="form-control" placeholder="Name (first & last)" [(ngModel)]="order.billing.name">
-          <input class="form-control" placeholder="Company (optional)" [(ngModel)]="order.billing.company">
           <input class="form-control" placeholder="Email" [(ngModel)]="order.billing.email">
           <input class="form-control" placeholder="Address" [(ngModel)]="order.billing.address">
           <input class="form-control" placeholder="City" [(ngModel)]="order.billing.city">
@@ -50,7 +49,8 @@ import { Router } from '@angular/router';
 export class CheckoutBillingComponent implements OnInit {
   order: any;
 
-  constructor(public globalService: GlobalService, public router: Router) {
+  constructor(public globalService: GlobalService
+              , public router: Router) {
 
     this.globalService.order.subscribe(currentOrder => {
       this.order = currentOrder;

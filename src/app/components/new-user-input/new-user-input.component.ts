@@ -4,6 +4,7 @@ import { AnimateDirective } from '../../directives/animate.directive';
 import { Subject } from 'rxjs/Subject';
 import { debounceTime } from 'rxjs/operator/debounceTime';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-new-user-input',
@@ -77,7 +78,8 @@ export class NewUserInputComponent implements OnInit {
               , private cardElement: ElementRef
               , private animator: AnimateDirective
               , public route: ActivatedRoute
-              , public router: Router) {}
+              , public router: Router
+              , private globalService: GlobalService) {}
 
   addUser(email: string, active: string, role: string) {
     if (!email) {
@@ -92,7 +94,7 @@ export class NewUserInputComponent implements OnInit {
         role: role || 'user'
       });
     } else {
-      this.db.object('/users/' + this.hashCode(email)).set({
+      this.db.object('/users/' + this.globalService.hashCode(email)).set({
         email: email,
         active: false,
         role: 'user'
@@ -155,18 +157,4 @@ export class NewUserInputComponent implements OnInit {
           }
       });
   }
-
-  hashCode(input: string) {
-    let hash = 0, i, chr;
-    if (input.length === 0) {
-      return hash;
-    }
-    for (i = 0; i < input.length; i++) {
-      chr   = input.charCodeAt(i);
-      hash  = ((hash << 5) - hash) + chr;
-      hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-  };
-
 }

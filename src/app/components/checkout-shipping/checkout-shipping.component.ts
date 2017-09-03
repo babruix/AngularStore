@@ -15,18 +15,10 @@ import { Router } from '@angular/router';
         <h3>Shipping address</h3>
       </div>
       <div class="card-body text-center">
-        <p class="card-text">
           <input class="form-control" placeholder="Full Name (first & last)" [(ngModel)]="order.shipping.name">
-        </p>
-        <p class="card-text">
           <input class="form-control" placeholder="Email" [(ngModel)]="order.shipping.email">
-        </p>
-        <p class="card-text">
           <input class="form-control" placeholder="Address" [(ngModel)]="order.shipping.address">
-        </p>
-        <p class="card-text">
           <input class="form-control" placeholder="City" [(ngModel)]="order.shipping.city">
-        </p>
       </div>
 
       <div class="card-footer text-muted">
@@ -56,16 +48,8 @@ import { Router } from '@angular/router';
 export class CheckoutShippingComponent implements OnInit {
   order: any;
 
-  constructor(public globalService: GlobalService, public router: Router) {
-    this.globalService.order.subscribe(currentOrder => {
-      this.order = currentOrder;
-      if (!this.order) {
-        this.router.navigateByUrl('');
-      }
-      if (!this.order.shipping) {
-        this.order.shipping = {};
-      }
-    });
+  constructor(public globalService: GlobalService
+              , public router: Router) {
   }
 
   goTo(url: string) {
@@ -79,6 +63,15 @@ export class CheckoutShippingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.globalService.order.subscribe(currentOrder => {
+      this.order = currentOrder;
+      if (!this.order) {
+        this.router.navigateByUrl('');
+      }
+      if (!this.order.shipping) {
+        this.order.shipping = {};
+      }
+    });
   }
 
 }
