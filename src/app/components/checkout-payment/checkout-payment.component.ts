@@ -49,15 +49,19 @@ export class CheckoutPaymentComponent implements OnInit {
         this.router.navigateByUrl('checkout/billing');
       }
     });
+
+    this.success
+      .subscribe((message) => {
+        this.successMessage = message;
+        setTimeout(() => this.animator
+          .slideDownIn(this.elem.nativeElement.querySelector('.alert')), 1);
+      });
   }
 
   createOrder() {
     this.db
       .object('/orders/' + Math.abs(this.hashCode))
       .set(this.order);
-
-    this.globalService.order.next(null);
-    this.globalService.cart.next(null);
 
     this.showSuccessMessage();
   }
@@ -72,6 +76,8 @@ export class CheckoutPaymentComponent implements OnInit {
       .slideUpOut(this.elem.nativeElement.querySelector('.alert')
         , () => {
           this.successMessage = '';
+          this.globalService.order.next(null);
+          this.globalService.cart.next(null);
           this.router.navigateByUrl('store');
         });
   }
