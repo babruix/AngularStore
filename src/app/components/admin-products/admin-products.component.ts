@@ -65,9 +65,9 @@ export class AdminProductsComponent implements OnInit {
   showAddProductForm: boolean;
 
   constructor(public db: AngularFireDatabase
-  , private productElement: ElementRef
-  , private animator: AnimateDirective
-  , public router: Router) {
+              , private productElement: ElementRef
+              , private animator: AnimateDirective
+              , public router: Router) {
     this.products = db.list('/products');
   }
 

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AnimateDirective } from '../../directives/animate.directive';
 
 @Component({
   selector: 'app-admin-orders',
@@ -9,20 +10,14 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
       <tr>
         <th>Order ID</th>
         <th>View</th>
-        <th>Edit</th>
         <th>Delete</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let order of orders | async">
         <td>{{order.$key}}</td>
-        <td><a routerLink="/admin/order/{{order.$key}}">VIEW</a></td>
         <td>
-          <button type="button" class="edit btn btn-outline-secondary"
-                  aria-label="Edit" ngbTooltip="Edit"
-                  (click)="editOrder(order)">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
-          </button>
+          {{order |json}}
         </td>
         <td>
           <button type="button" class="close btn btn-outline-secondary"
@@ -41,17 +36,17 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 })
 export class AdminOrdersComponent implements OnInit {
   orders: FirebaseListObservable<any>;
-  constructor(private af: AngularFireDatabase) { }
+  constructor(private af: AngularFireDatabase
+              , private orderElement: ElementRef
+              , private animator: AnimateDirective) { }
 
   ngOnInit() {
     this.orders = this.af.list('/orders');
   }
 
-  editOrder(order) {
-
-  }
-
   removeOrder(order) {
-
+    this.animator.animationOut(this.orderElement, () => {
+      this.af.list('/orders/' + order.$key).remove();
+    });
   }
 }
