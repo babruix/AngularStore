@@ -41,7 +41,7 @@ import { Router } from '@angular/router';
           </td>
           <td>
             <button type="button" class="close btn btn-outline-secondary"
-                    aria-label="Close" ngbTooltip="Remove"
+                    aria-label="Remove" ngbTooltip="Remove"
                     (click)="removeUser(user)">
               <i class="fa fa-trash-o" aria-hidden="true"></i>
             </button>
