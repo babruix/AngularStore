@@ -18,6 +18,9 @@ import * as firebase from 'firebase/app';
         <li class="nav-item">
           <a class="nav-link" routerLink="admin/users" *ngIf="(user | async)?.uid">Manage Users</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="admin/orders" *ngIf="(user | async)?.uid">Manage Orders</a>
+        </li>
       </ul>
     </nav>
   `,

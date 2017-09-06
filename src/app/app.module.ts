@@ -39,6 +39,7 @@ import { AdminProductsComponent } from './components/admin-products/admin-produc
 import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
+import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
 
 const appRoutes: Routes = [
   {path: '', component: ProductListComponent},
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
       {path: 'edit-product/:key', component: NewProductInputComponent},
       {path: 'users', component: AdminUsersComponent},
       {path: 'edit-user/:key', component: NewUserInputComponent},
+      {path: 'orders', component: AdminOrdersComponent},
     ]
   },
   {path: 'checkout'
@@ -86,6 +88,7 @@ const appRoutes: Routes = [
     CheckoutShippingComponent,
     CheckoutBillingComponent,
     CheckoutPaymentComponent,
+    AdminOrdersComponent,
   ],
   imports: [
     BrowserModule,

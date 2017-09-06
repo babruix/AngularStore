@@ -53,8 +53,7 @@ export class CheckoutPaymentComponent implements OnInit {
     this.success
       .subscribe((message) => {
         this.successMessage = message;
-        setTimeout(() => this.animator
-          .slideDownIn(this.elem.nativeElement.querySelector('.alert')), 1);
+        setTimeout(() => this.hideMessage(), 1);
       });
   }
 
