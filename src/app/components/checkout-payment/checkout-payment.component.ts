@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
                (close)="hideMessage()">
       {{ successMessage }}
     </ngb-alert>
+    <div class="card">
+      {{order |json}}
+    </div>
     <button class="btn btn-primary" (click)="createOrder()">Pay now</button>
   `,
   styles: []
@@ -35,20 +38,8 @@ export class CheckoutPaymentComponent implements OnInit {
     const time = new Date().getTime()
       , uid = user.uid;
     this.hashCode = this.globalService.hashCode(time + uid);
-
-    this.globalService.order.subscribe(currentOrder => {
-      this.order = currentOrder;
-      if (!this.order) {
-        this.router.navigateByUrl('cart');
-      }
-
-      if (!this.order.shipping) {
-        this.router.navigateByUrl('checkout/shipping');
-      }
-      if (!this.order.billing) {
-        this.router.navigateByUrl('checkout/billing');
-      }
-    });
+    this.order = this.globalService.order.getValue();
+    this.order.products = this.globalService.cart.getValue();
 
     this.success
       .subscribe((message) => {
