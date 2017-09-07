@@ -34,12 +34,13 @@ export class CheckoutPaymentComponent implements OnInit {
   }
 
   ngOnInit() {
-    const user = this.globalService.user.getValue();
-    const time = new Date().getTime()
+    const user = this.globalService.user.getValue()
+      , time = new Date().getTime()
       , uid = user.uid;
     this.hashCode = this.globalService.hashCode(time + uid);
     this.order = this.globalService.order.getValue();
     this.order.products = this.globalService.cart.getValue();
+    this.order.uid = uid;
 
     this.success
       .subscribe((message) => {

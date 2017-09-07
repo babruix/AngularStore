@@ -30,6 +30,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { UserCartComponent } from './components/user-cart/user-cart.component';
 import { CheckoutShippingComponent } from './components/checkout-shipping/checkout-shipping.component';
 import { CheckoutBillingComponent } from './components/checkout-billing/checkout-billing.component';
+import { UserOrdersComponent } from './components/user-orders/user-orders.component';
 
 // admin
 import { CheckoutPaymentComponent } from './components/checkout-payment/checkout-payment.component';
@@ -40,6 +41,7 @@ import { NewProductInputComponent } from './components/new-product-input/new-pro
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
+
 
 const appRoutes: Routes = [
   {path: '', component: ProductListComponent},
@@ -64,6 +66,7 @@ const appRoutes: Routes = [
     ]
   },
   {path: 'login', component: LoginComponent},
+  {path: 'orders', component: UserOrdersComponent},
   {path: 'store', component: ProductListComponent},
   {path: '', redirectTo: '/store', pathMatch: 'full'},
   {path: '**', redirectTo: '/store', pathMatch: 'full'}
@@ -89,6 +92,7 @@ const appRoutes: Routes = [
     CheckoutBillingComponent,
     CheckoutPaymentComponent,
     AdminOrdersComponent,
+    UserOrdersComponent,
   ],
   imports: [
     BrowserModule,
