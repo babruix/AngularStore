@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -42,6 +43,7 @@ import { Router } from '@angular/router';
           <td>
             <button type="button" class="close btn btn-outline-secondary"
                     aria-label="Close" ngbTooltip="Remove"
+                    *ngIf="userRole==='admin'"
                     (click)="removeProduct(product)">
               <i class="fa fa-trash-o" aria-hidden="true"></i>
             </button>
@@ -63,16 +65,29 @@ export class AdminProductsComponent implements OnInit {
 
   products: FirebaseListObservable<any>;
   showAddProductForm: boolean;
+  userRole: string
+  user;
 
   constructor(public db: AngularFireDatabase
               , private productElement: ElementRef
               , private animator: AnimateDirective
-              , public router: Router) {
+              , public router: Router
+              , public afAuth: AngularFireAuth) {
+                
     this.products = db.list('/products');
   }
 
   ngOnInit() {
     this.showAddProductForm = true;
+    this.afAuth.authState.subscribe(
+      (auth) => {
+        if (auth != null) {
+          this.db.object('users/' + auth.uid).subscribe(u => {
+            this.userRole = u.role;
+            console.log(this.userRole)
+          });
+        }
+      });
   }
 
   removeProduct(product) {

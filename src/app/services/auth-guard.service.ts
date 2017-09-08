@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
       if (root.children.primary.segments.length
         && root.children.primary.segments[0].path === 'admin') {
         this.db.object('/users/' + auth.uid).subscribe(u => {
-          if (u.role !== 'admin') {
+          if (u.role !== 'admin' && u.role !== 'manager') {
             this.router.navigate(['/']);
           }
         });
