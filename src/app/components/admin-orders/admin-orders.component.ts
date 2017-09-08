@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-admin-orders',
@@ -10,7 +11,7 @@ import { AnimateDirective } from '../../directives/animate.directive';
       <tr>
         <th>Order ID</th>
         <th>View</th>
-        <th>Delete</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -22,6 +23,7 @@ import { AnimateDirective } from '../../directives/animate.directive';
         <td>
           <button type="button" class="close btn btn-outline-secondary"
                   aria-label="Remove" ngbTooltip="Remove"
+                  *ngIf="userRole==='admin'"
                   (click)="removeOrder(order)">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </button>
@@ -36,12 +38,24 @@ import { AnimateDirective } from '../../directives/animate.directive';
 })
 export class AdminOrdersComponent implements OnInit {
   orders: FirebaseListObservable<any>;
+  userRole: string
+  user;
+
   constructor(private af: AngularFireDatabase
               , private orderElement: ElementRef
-              , private animator: AnimateDirective) { }
+              , private animator: AnimateDirective
+              , public afAuth: AngularFireAuth) { }
 
   ngOnInit() {
     this.orders = this.af.list('/orders');
+    this.afAuth.authState.subscribe(
+      (auth) => {
+        if (auth != null) {
+          this.af.object('users/' + auth.uid).subscribe(u => {
+            this.userRole = u.role;
+          });
+        }
+      });
   }
 
   removeOrder(order) {

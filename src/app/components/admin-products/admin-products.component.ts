@@ -84,7 +84,6 @@ export class AdminProductsComponent implements OnInit {
         if (auth != null) {
           this.db.object('users/' + auth.uid).subscribe(u => {
             this.userRole = u.role;
-            console.log(this.userRole)
           });
         }
       });
