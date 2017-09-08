@@ -42,6 +42,10 @@ import { ActivatedRoute, Params } from '@angular/router';
       margin: -12px -21px 0 0;
       padding: 0 5px;
     }
+    h2 {
+      min-height: 80px;
+      margin-top: 15px;
+    }
   `],
 })
 export class ProductComponent implements OnInit {
