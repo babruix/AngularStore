@@ -19,7 +19,7 @@ Use Angular 2+ to build an e-commerce site with:
           - [x] Can *RD* orders
       - [ ] Manager
           - [x] Can *CRU* products
-          - [ ] Can *R* orders
+          - [x] Can *R* orders
           - [ ] Can change status of an order
       - [x] User
           - [x] Can *CR* orders
