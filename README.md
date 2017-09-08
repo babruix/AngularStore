@@ -10,17 +10,17 @@ Use Angular 2+ to build an e-commerce site with:
 - [x] Authentication
   >  (registration/auth mocking is permitted)
   - [x] Recaptcha on user authentication
-- [ ] Roles
-  - [ ] Three types of roles: admin, manager, user
+- [x] Roles
+  - [x] Three types of roles: admin, manager, user
       - [x] Admin
           - [x] Can *CRUD (Create, Read, Update, Delete)* users
           - [x] Can assign/remove roles to users
           - [x] Can *CRUD* products
           - [x] Can *RD* orders
-      - [ ] Manager
+      - [x] Manager
           - [x] Can *CRU* products
           - [x] Can *R* orders
-          - [ ] Can change status of an order
+          - [x] Can change status of an order
       - [x] User
           - [x] Can *CR* orders
           - [x] Update Profile
