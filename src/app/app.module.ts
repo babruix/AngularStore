@@ -19,6 +19,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
 // services
 import { GlobalService } from './services/global.service';
 import { AuthGuard } from './services/auth-guard.service';
+import { PaymentService } from './services/payment.service';
 
 // components
 import { AppComponent } from './app.component';
@@ -112,7 +113,7 @@ const appRoutes: Routes = [
     ),
     RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
   ],
-  providers: [GlobalService, AuthGuard, AnimateDirective],
+  providers: [GlobalService, AuthGuard, AnimateDirective, PaymentService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,9 +1,12 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AnimateDirective } from '../../directives/animate.directive';
 import { GlobalService } from 'app/services/global.service';
 import { Router } from '@angular/router';
+
+import { PaymentService } from '../../services/payment.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-checkout-payment',
@@ -15,7 +18,8 @@ import { Router } from '@angular/router';
     <div class="card">
       {{order |json}}
     </div>
-    <button class="btn btn-primary" (click)="createOrder()">Pay now</button>
+    
+    <button class="btn btn-primary" (click)="handlePayment()">Pay now</button>
   `,
   styles: []
 })
@@ -24,13 +28,25 @@ export class CheckoutPaymentComponent implements OnInit {
   successMessage: string;
   hashCode: any;
   order: any;
+  handler: any;
+  globalCart: any;
+  cartArray: any;
+  orderTotal: number;
 
   constructor(private db: AngularFireDatabase
     , private animator: AnimateDirective
     , private elem: ElementRef
     , private globalService: GlobalService
-    , private router: Router) {
+    , private router: Router
+    , private paymentSvc: PaymentService) {
 
+    this.handler = StripeCheckout.configure({
+      key: environment.stripeKey,
+      locale: 'auto',
+      token: token => {
+        this.paymentSvc.processPayment(token, this.orderTotal)
+      }
+    });
   }
 
   ngOnInit() {
@@ -47,6 +63,37 @@ export class CheckoutPaymentComponent implements OnInit {
         this.successMessage = message;
         setTimeout(() => this.hideMessage(), 1);
       });
+
+    this.handler = StripeCheckout.configure({
+      key: environment.stripeKey,
+      locale: 'auto',
+      token: token => {
+        this.paymentSvc.processPayment(token, this.orderTotal)
+      }
+    });
+
+    this.cartArray = [];
+
+    this.globalService.cart.subscribe((cart) => {
+      this.globalCart = cart;
+      this.cartArray = [];
+      this.cartArray = (<any>Object).values(this.globalCart);
+      this.orderTotal = this.cartArray
+        .reduce((a, b) => a + b.total, 0);
+    });
+  }
+
+  handlePayment() {
+    this.handler.open({
+      name: 'Angular Commerce',
+      description: 'Process with the order',
+      amount: this.orderTotal
+    });
+    this.createOrder();
+  }
+  @HostListener('window:popstate')
+  onPopstate() {
+    this.handler.close()
   }
 
   createOrder() {
