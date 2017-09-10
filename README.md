@@ -35,4 +35,4 @@ Use Angular 2+ to build an e-commerce site with:
     > alternatively, you can create your own with your language of preference.
 - [x] Use Ngrx to manage the state.
 - [x] You can use third party UI libraries.
-- [ ] Separate modules for User/Admin+Manager supporting Lazy Loading.
+- [x] Separate modules for User/Admin+Manager supporting Lazy Loading.

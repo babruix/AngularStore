@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './reducers/index';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ColorPickerModule } from 'ngx-color-picker';
 import { NgxAniModule } from 'ngxani';
 import { AnimateDirective } from './directives/animate.directive';
 import { AngularFireModule } from 'angularfire2';
@@ -32,30 +31,13 @@ import { UserCartComponent } from './components/user-cart/user-cart.component';
 import { CheckoutShippingComponent } from './components/checkout-shipping/checkout-shipping.component';
 import { CheckoutBillingComponent } from './components/checkout-billing/checkout-billing.component';
 import { UserOrdersComponent } from './components/user-orders/user-orders.component';
-
-// admin
 import { CheckoutPaymentComponent } from './components/checkout-payment/checkout-payment.component';
-import { ColorInputComponent } from './components/color-input/color-input.component';
-import { AdminComponent } from './components/admin/admin.component';
-import { AdminProductsComponent } from './components/admin-products/admin-products.component';
-import { NewProductInputComponent } from './components/new-product-input/new-product-input.component';
-import { AdminUsersComponent } from './components/admin-users/admin-users.component';
-import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
-import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 
 
 const appRoutes: Routes = [
   {path: '', component: ProductListComponent},
-  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]
-    , children: [
-      {path: 'products', component: AdminProductsComponent},
-      {path: 'edit-product/:key', component: NewProductInputComponent},
-      {path: 'users', component: AdminUsersComponent},
-      {path: 'edit-user/:key', component: NewUserInputComponent},
-      {path: 'orders', component: AdminOrdersComponent},
-    ]
-  },
+  {path: 'admin', loadChildren: './admin.module#AdminModule', canActivate: [AuthGuard]},
   {path: 'checkout'
     , children: [
       {path: '',
@@ -80,21 +62,14 @@ const appRoutes: Routes = [
     AppComponent,
     ProductComponent,
     ProductListComponent,
-    NewProductInputComponent,
-    NewUserInputComponent,
-    ColorInputComponent,
     LoginComponent,
     AnimateDirective,
-    AdminComponent,
-    AdminUsersComponent,
-    AdminProductsComponent,
     NavComponent,
     SidebarComponent,
     UserCartComponent,
     CheckoutShippingComponent,
     CheckoutBillingComponent,
     CheckoutPaymentComponent,
-    AdminOrdersComponent,
     UserOrdersComponent,
     UserRegisterComponent,
   ],
@@ -107,7 +82,6 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     ReactiveFormsModule,
     StoreModule.provideStore(reducer),
-    ColorPickerModule,
     NgbModule.forRoot(),
     NgxAniModule,
     RouterModule.forRoot(
