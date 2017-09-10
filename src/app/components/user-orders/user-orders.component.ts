@@ -7,11 +7,12 @@ import { AngularFireAuth } from 'angularfire2/auth';
 @Component({
   selector: 'app-user-orders',
   template: `
+    <h1>My orders</h1>
     <table class="table table-striped">
       <thead>
       <tr>
         <th>Order ID</th>
-        <th>View</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>

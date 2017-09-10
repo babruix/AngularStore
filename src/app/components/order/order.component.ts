@@ -19,18 +19,68 @@ import { AngularFireAuth } from 'angularfire2/auth';
         </select>
       </div>
       <div class="card-block">
-        <h4 class="card-title">Billing info:</h4>
-        <h6 class="card-subtitle mb-2 text-muted">
-          {{order.billing|json}}
-        </h6>
-        <h4 class="card-title">Shipping info:</h4>
-        <h6 class="card-subtitle mb-2 text-muted">
-          {{order.shipping|json}}
-        </h6>
         <h4 class="card-title">Products:</h4>
-        <p class="card-text">
-          {{order.products|json}}
-        </p>
+        <table class="table">
+          <thead class="thead-inverse">
+          <tr>
+            <th>title</th>
+            <th>description</th>
+            <th>price</th>
+            <th>quantity</th>
+            <th>total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.title }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.total }}</td>
+          </tr>
+          </tbody>
+        </table>
+        
+        <h4 class="card-title">Billing info:</h4>
+        <table class="table">
+          <thead class="thead-inverse">
+          <tr>
+            <th>Address</th>
+            <th>City</th>
+            <th>Email</th>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{ order.billing.address }}</td>
+            <td>{{ order.billing.city }}</td>
+            <td>{{ order.billing.email }}</td>
+            <td>{{ order.billing.name }}</td>
+          </tr>
+          </tbody>
+        </table>
+        
+        <h4 class="card-title">Shipping info:</h4>
+        <table class="table">
+          <thead class="thead-inverse">
+          <tr>
+            <th>Address</th>
+            <th>City</th>
+            <th>Email</th>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{ order.shipping.address }}</td>
+            <td>{{ order.shipping.city }}</td>
+            <td>{{ order.shipping.email }}</td>
+            <td>{{ order.shipping.name }}</td>
+          </tr>
+          </tbody>
+        </table>
+        
       </div>
     </div>
   `,
@@ -38,6 +88,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class OrderComponent implements OnInit {
   @Input() order: any;
+  products: Array<any>;
   userRole: string;
 
   constructor(private af: AngularFireDatabase
@@ -52,6 +103,10 @@ export class OrderComponent implements OnInit {
           });
         }
       });
+
+    // Collect products of the order
+    this.products = [];
+    Object.keys(this.order.products).map(key => this.products.push(this.order.products[key]));
   }
 
   updateOrderStatus(order) {
