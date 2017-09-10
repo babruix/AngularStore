@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-register',
@@ -24,22 +25,24 @@ import { Router } from '@angular/router';
           <label for="inputPassword" class="sr-only">Password</label>
           <input #password type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
           <br>
-          <button  class="btn btn-md btn-primary btn-block" type="submit">Register</button>
+          <re-captcha *ngIf="!captchaResolved && !(user | async)?.uid"
+                      (resolved)="captchaResolved = true"
+                      siteKey="{{ siteKey }}"></re-captcha>
+          <button *ngIf="captchaResolved" class="btn btn-md btn-primary btn-block" type="submit">Register</button>
         </form>
       </div>
     </div>
   `,
-  styles: [`
+  styles: [`    
     .registermodal-container {
       padding: 30px;
-      max-width: 350px;
+      max-width: 363px;
       width: 100% !important;
       background-color: #F7F7F7;
       margin: 0 auto;
       border-radius: 2px;
       box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
       overflow: hidden;
-      font-family: roboto;
     }
 
     .registermodal-container h1 {
@@ -51,11 +54,16 @@ import { Router } from '@angular/router';
 })
 export class UserRegisterComponent {
 
-  public error: any;
+  public error: Error;
+  public captchaResolved: boolean;
+  public siteKey: string;
 
   constructor(public afAuth: AngularFireAuth
               , public af: AngularFireDatabase
-              , private router: Router) { }
+              , private router: Router) {
+
+    this.siteKey = environment.captchaKey;
+  }
 
   registerUser(email, password) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
