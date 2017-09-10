@@ -26,9 +26,9 @@ Use Angular 2+ to build an e-commerce site with:
           - [x] Update Profile
               - [x] Billing Address
               - [x] Shipping Address
-- [ ] Order checkout
+- [x] Order checkout
     - [x] Ability to add different products and different quantities to the cart
-    - [ ] Payment using PayPal or Stripe Sandboxes
+    - [x] Payment using PayPal or Stripe Sandboxes
     
 **Technical requirements**
 - [x] You can use a service like Firebase to power the backend of your application, 
