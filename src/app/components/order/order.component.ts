@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
     <div class="card">
       <div class="card-header">
         Order Status: {{ order.status || 'pending'}}
-        <select *ngIf="userRole==='admin'"
+        <select *ngIf="userRole==='manager'"
                 class="form-control" name="status"
                 [(ngModel)]="order.status"
                 (change)="updateOrderStatus(order)">

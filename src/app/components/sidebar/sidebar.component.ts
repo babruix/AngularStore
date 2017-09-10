@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +20,7 @@ import * as firebase from 'firebase/app';
           <a class="nav-link" routerLink="admin/products" *ngIf="(user | async)?.uid">Manage Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="admin/users" *ngIf="(user | async)?.uid">Manage Users</a>
+          <a class="nav-link" routerLink="admin/users" *ngIf="(user | async)?.uid && userRole==='admin'">Manage Users</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="admin/orders" *ngIf="(user | async)?.uid">Manage Orders</a>
@@ -47,12 +48,22 @@ import * as firebase from 'firebase/app';
 })
 export class SidebarComponent implements OnInit {
   user: Observable<firebase.User>;
+  userRole: string;
 
-  constructor(public afAuth: AngularFireAuth) {
+  constructor(public afAuth: AngularFireAuth
+              , private af: AngularFireDatabase) {
     this.user = afAuth.authState;
   }
 
   ngOnInit() {
+    this.afAuth.authState.subscribe(
+      (auth) => {
+        if (auth != null) {
+          this.af.object('/users/' + auth.uid).subscribe(u => {
+            this.userRole = u.role;
+          });
+        }
+      });
   }
 
 }
