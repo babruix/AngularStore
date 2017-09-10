@@ -15,9 +15,8 @@ import { environment } from '../../../environments/environment';
                (close)="hideMessage()">
       {{ successMessage }}
     </ngb-alert>
-    <div class="card">
-      {{order |json}}
-    </div>
+    Order Review:
+    <app-order [order]="order"></app-order>
     
     <button class="btn btn-primary" (click)="handlePayment()">Pay now</button>
   `,

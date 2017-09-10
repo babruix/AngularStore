@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -92,9 +93,18 @@ export class OrderComponent implements OnInit {
   userRole: string;
 
   constructor(private af: AngularFireDatabase
-              , public afAuth: AngularFireAuth) { }
+              , private afAuth: AngularFireAuth
+              , private router: Router) { }
 
   ngOnInit() {
+    // Collect products of the order
+    this.products = [];
+    Object.keys(this.order.products).map(key => this.products.push(this.order.products[key]));
+
+    // Do not look for the userRole when not on managing orders page
+    if (this.router.url !== '/admin/orders') {
+      return;
+    }
     this.afAuth.authState.subscribe(
       (auth) => {
         if (auth != null) {
@@ -103,10 +113,6 @@ export class OrderComponent implements OnInit {
           });
         }
       });
-
-    // Collect products of the order
-    this.products = [];
-    Object.keys(this.order.products).map(key => this.products.push(this.order.products[key]));
   }
 
   updateOrderStatus(order) {
