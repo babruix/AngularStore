@@ -14,6 +14,7 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
 import { ColorInputComponent } from './components/color-input/color-input.component';
+import { OrderModule } from './order.module';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
     NgbModule.forRoot(),
     NgxAniModule,
     ColorPickerModule,
+    OrderModule,
   ],
   declarations: [
     AdminComponent,

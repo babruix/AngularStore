@@ -18,34 +18,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
       <tr *ngFor="let order of orders | async">
         <td>{{order.$key}}</td>
         <td>
-          <div class="card">
-            <div class="card-header">
-              Order Status: {{ order.status || 'pending'}}
-              <select *ngIf="userRole==='admin'"
-                      class="form-control" name="status"
-                      [(ngModel)]="order.status"
-                      (change)="updateOrderStatus(order)">
-                <option value="pending">Pending</option>
-                <option value="approved">Approved</option>
-                <option value="shipped">Shipped</option>
-                <option value="received">Received</option>
-              </select>
-            </div>
-            <div class="card-block">
-              <h4 class="card-title">Billing info:</h4>
-              <h6 class="card-subtitle mb-2 text-muted">
-                {{order.billing|json}}
-              </h6>
-              <h4 class="card-title">Shipping info:</h4>
-              <h6 class="card-subtitle mb-2 text-muted">
-                {{order.shipping|json}}
-              </h6>
-              <h4 class="card-title">Products:</h4>
-              <p class="card-text">
-                {{order.products|json}}
-              </p>
-            </div>
-          </div>
+          <app-order [order]="order"></app-order>
         </td>
         <td>
           <button type="button" class="close btn btn-outline-secondary"
@@ -65,7 +38,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class AdminOrdersComponent implements OnInit {
   orders: FirebaseListObservable<any>;
-  userRole: string
+  userRole: string;
   user;
 
   constructor(private af: AngularFireDatabase
@@ -83,12 +56,6 @@ export class AdminOrdersComponent implements OnInit {
           });
         }
       });
-  }
-
-  updateOrderStatus(order) {
-    this.af.object('/orders/' + order.$key).update({
-      status: order.status
-    });
   }
 
   removeOrder(order) {

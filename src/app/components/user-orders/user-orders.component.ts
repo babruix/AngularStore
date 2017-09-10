@@ -18,7 +18,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
       <tr *ngFor="let order of orders | async">
         <td>{{order.$key}}</td>
         <td>
-          {{order |json}}
+          <app-order [order]="order"></app-order>
         </td>
       </tr>
       </tbody>

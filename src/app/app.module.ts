@@ -14,6 +14,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { OrderModule } from './order.module';
 
 // services
 import { GlobalService } from './services/global.service';
@@ -89,6 +90,7 @@ const appRoutes: Routes = [
       // { enableTracing: true }
     ),
     RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
+    OrderModule,
   ],
   providers: [GlobalService, AuthGuard, AnimateDirective, PaymentService],
   bootstrap: [AppComponent]
