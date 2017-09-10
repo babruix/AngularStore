@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment';
                (close)="hideMessage()">
       {{ successMessage }}
     </ngb-alert>
-    Order Review:
+    <h1>Order Review:</h1>
     <app-order [order]="order"></app-order>
     
     <button class="btn btn-primary" (click)="handlePayment()">Pay now</button>

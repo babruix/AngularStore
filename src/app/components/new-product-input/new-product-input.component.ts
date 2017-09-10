@@ -16,7 +16,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
       <div class="card">
         <div class="card-header">
           <h1>Add a Product</h1>
-          <app-color-input></app-color-input>
         </div>
         <ngb-alert *ngIf="successMessage" type="success"
                    (close)="hideMessage()">

@@ -29,7 +29,7 @@ import { ActivatedRoute, Params } from '@angular/router';
       
       <div class="card-footer text-muted">
         <div *ngIf="globalCart[product.$key]">
-          <span>Already in Cart</span>
+          <span>Added to Cart</span>
         </div>
         <div *ngIf="!globalCart[product.$key]">
           <button class="btn btn-success" type="button" (click)="addToCart(product)">Add to cart</button>

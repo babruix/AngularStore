@@ -15,6 +15,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { OrderModule } from './order.module';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 // services
 import { GlobalService } from './services/global.service';
@@ -34,6 +35,7 @@ import { CheckoutBillingComponent } from './components/checkout-billing/checkout
 import { UserOrdersComponent } from './components/user-orders/user-orders.component';
 import { CheckoutPaymentComponent } from './components/checkout-payment/checkout-payment.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
+import { ColorInputComponent } from './components/color-input/color-input.component';
 
 
 const appRoutes: Routes = [
@@ -73,6 +75,7 @@ const appRoutes: Routes = [
     CheckoutPaymentComponent,
     UserOrdersComponent,
     UserRegisterComponent,
+    ColorInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +94,7 @@ const appRoutes: Routes = [
     ),
     RecaptchaModule.forRoot(), // Keep in mind the "forRoot"-magic nuances!
     OrderModule,
+    ColorPickerModule,
   ],
   providers: [GlobalService, AuthGuard, AnimateDirective, PaymentService],
   bootstrap: [AppComponent]

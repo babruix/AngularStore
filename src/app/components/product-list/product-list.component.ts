@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-product-list',
   template: `
+    <app-color-input></app-color-input>
     <div class="container-fluid">
       <div class="row product-columns">
         <app-product *ngFor="let product of products | async"
