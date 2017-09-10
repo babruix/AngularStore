@@ -4,7 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { GlobalService } from '../../services/global.service';
 import { AngularFireDatabase } from 'angularfire2/database';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +12,14 @@ import { AngularFireDatabase } from 'angularfire2/database';
     <div class="login-frame">
       <re-captcha *ngIf="!captchaResolved && !(user | async)?.uid" 
                   (resolved)="captchaResolved = true" 
-                  siteKey="6LeZ5i4UAAAAAKQwZjqandEEMDUqP3CdXtHwsrXN"></re-captcha>
+                  siteKey="{{ siteKey }}"></re-captcha>
       <button (click)="login()" class="btn btn-default" *ngIf="captchaResolved && !(user | async)?.uid">
-        <img class="google-icon" src="../../assets/google-icon.png">
+        <img class="google-icon" src="../../assetss/google-icon.png">
         Sign In
       </button>
       <img src="{{ (user | async)?.photoURL }}" class="user-photo">
       <button class="btn btn-default" (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
+      <a class="nav-link" routerLink="register" *ngIf="!(user | async)?.uid">Register</a>
     </div>
   `,
   styles: [
@@ -35,12 +36,14 @@ import { AngularFireDatabase } from 'angularfire2/database';
 export class LoginComponent implements OnInit {
 
   user: Observable<firebase.User>;
+  siteKey: string;
   public captchaResolved: boolean;
 
   constructor(public afAuth: AngularFireAuth
     , public globalService: GlobalService
     , public db: AngularFireDatabase) {
 
+    this.siteKey = environment.captchaKey;
     this.user = afAuth.authState;
     this.captchaResolved = false;
 

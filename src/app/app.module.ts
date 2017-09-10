@@ -42,6 +42,7 @@ import { NewProductInputComponent } from './components/new-product-input/new-pro
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { NewUserInputComponent } from './components/new-user-input/new-user-input.component';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
+import { UserRegisterComponent } from './components/user-register/user-register.component';
 
 
 const appRoutes: Routes = [
@@ -67,6 +68,7 @@ const appRoutes: Routes = [
     ]
   },
   {path: 'login', component: LoginComponent},
+  {path: 'register', component: UserRegisterComponent},
   {path: 'orders', component: UserOrdersComponent},
   {path: 'store', component: ProductListComponent},
   {path: '', redirectTo: '/store', pathMatch: 'full'},
@@ -94,6 +96,7 @@ const appRoutes: Routes = [
     CheckoutPaymentComponent,
     AdminOrdersComponent,
     UserOrdersComponent,
+    UserRegisterComponent,
   ],
   imports: [
     BrowserModule,

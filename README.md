@@ -3,7 +3,7 @@
 Use Angular 2+ to build an e-commerce site with:
 
  - [ ]  User registration
-    - [ ] User can register at any time to the store 
+    - [x] User can register at any time to the store 
       >  (registration/auth mocking is permitted)
     - [ ] Recaptcha on user registration
 - [x] Product catalog
