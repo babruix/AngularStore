@@ -68,6 +68,7 @@ export class CheckoutPaymentComponent implements OnInit {
       locale: 'auto',
       token: token => {
         this.paymentSvc.processPayment(token, this.orderTotal)
+        this.createOrder();
       }
     });
 
@@ -88,7 +89,6 @@ export class CheckoutPaymentComponent implements OnInit {
       description: 'Process with the order',
       amount: this.orderTotal
     });
-    this.createOrder();
   }
   @HostListener('window:popstate')
   onPopstate() {
@@ -115,7 +115,7 @@ export class CheckoutPaymentComponent implements OnInit {
           this.successMessage = '';
           this.globalService.order.next(null);
           this.globalService.cart.next(null);
-          this.router.navigateByUrl('store');
+          this.router.navigateByUrl('orders');
         });
   }
 }
